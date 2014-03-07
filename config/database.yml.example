@@ -19,7 +19,7 @@ development:
   encoding: unicode
   database: zrcle_development
   pool: 5
-  username: zrcle
+  username: postgres
   password:
 
   # Connect on a TCP socket. Omitted by default since the client uses a
@@ -48,13 +48,6 @@ test:
   encoding: unicode
   database: zrcle_test
   pool: 5
-  username: zrcle
+  username: postgres
   password:
 
-production:
-  adapter: postgresql
-  encoding: unicode
-  database: zrcle_production
-  pool: 5
-  username: zrcle
-  password:
