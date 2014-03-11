@@ -1,14 +1,14 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  user_id: 1
-  name: MyString
-  description: MyText
-  image: MyString
-  category_id: 1
-  expected_result: MyText
+buy:
+  user: john
+  name: Buy Apartment
+  description: Buy an apartment
+  image: Apartment.Image
+  goal_category: life
+  expected_result: Some Text
   date: 2014-03-10
-  goal_type_id: steps
+  goal_type: steps
 
 lose:
   user_id: pete
@@ -18,4 +18,4 @@ lose:
   goal_category: sports
   expected_result: How To Lose It
   date: 2014-03-11
-  goal_type_id: progressive
+  goal_type: progressive
