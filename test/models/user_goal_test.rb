@@ -1,7 +1,15 @@
 require 'test_helper'
 
 class UserGoalTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+
+  def setup
+    @goal = user_goals(:one)
+  end
+
+  test "status" do
+    assert @goal.state
+  end
+
+
+
 end

@@ -1,19 +1,19 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  name: MyString
-  lastname: MyString
-  email: MyString
+john:
+  name: John
+  lastname: Don
+  email: my_mail@pro.com
   provider: MyString
   uid: MyString
   oauth_token: MyString
   oauth_expires_at: 2014-03-10
   password: MyString
 
-two:
-  name: MyString
-  lastname: MyString
-  email: MyString
+pete:
+  name: Pete
+  lastname: Snow
+  email: pete@pro.com
   provider: MyString
   uid: MyString
   oauth_token: MyString
