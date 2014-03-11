@@ -8,7 +8,7 @@ class CreateGoals < ActiveRecord::Migration
       t.integer :goal_category_id
       t.text :expected_result
       t.date :date
-      t.integer :type_id
+      t.integer :goal_type_id
 
       t.timestamps
     end

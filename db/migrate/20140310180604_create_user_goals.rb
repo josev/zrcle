@@ -3,6 +3,7 @@ class CreateUserGoals < ActiveRecord::Migration
     create_table :user_goals do |t|
       t.integer :user_id
       t.integer :goal_id
+      t.string :state
 
       t.timestamps
     end

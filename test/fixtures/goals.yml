@@ -8,14 +8,14 @@ one:
   category_id: 1
   expected_result: MyText
   date: 2014-03-10
-  type_id: 1
+  goal_type_id: steps
 
-two:
-  user_id: 1
-  name: MyString
-  description: MyText
-  image: MyString
-  category_id: 1
-  expected_result: MyText
-  date: 2014-03-10
-  type_id: 1
+lose:
+  user_id: pete
+  name: Lose Weight
+  description: Lose the belly
+  image: Belly.Image
+  goal_category: sports
+  expected_result: How To Lose It
+  date: 2014-03-11
+  goal_type_id: progressive
