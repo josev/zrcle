@@ -100,7 +100,7 @@ ActiveRecord::Schema.define(version: 20140310182725) do
     t.integer  "goal_category_id"
     t.text     "expected_result"
     t.date     "date"
-    t.integer  "type_id"
+    t.integer  "goal_type_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -114,6 +114,7 @@ ActiveRecord::Schema.define(version: 20140310182725) do
   create_table "user_goals", force: true do |t|
     t.integer  "user_id"
     t.integer  "goal_id"
+    t.string   "state"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
