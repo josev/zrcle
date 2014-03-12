@@ -1,4 +1,5 @@
 class Goal < ActiveRecord::Base
+	validates :user_id, :name, :description, :goal_category_id, :expected_result, :date, :goal_type_id, presence: true
 	belongs_to :user
 	belongs_to :goal_category
 	belongs_to :goal_type
