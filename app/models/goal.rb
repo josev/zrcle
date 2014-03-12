@@ -7,6 +7,6 @@ class Goal < ActiveRecord::Base
 
 	private
 		def create_usergoal
-			ug = UserGoal.create(user_id: self.user_id, goal_id: self.id, status: "0")
+			ug = UserGoal.create(user_id: self.user_id, goal_id: self.id, state: "0")
 		end
 end

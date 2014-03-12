@@ -32,16 +32,16 @@ ActiveRecord::Schema.define(version: 20140310182725) do
     t.datetime "updated_at"
   end
 
-  create_table "follor_users", force: true do |t|
+  create_table "follow_goals", force: true do |t|
     t.integer  "user_id"
-    t.integer  "follow_user_id"
+    t.integer  "follow_goal_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "follow_goals", force: true do |t|
+  create_table "follow_users", force: true do |t|
     t.integer  "user_id"
-    t.integer  "follow_goal_id"
+    t.integer  "follow_user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
