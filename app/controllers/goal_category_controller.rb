@@ -1,0 +1,2 @@
+class GoalCategoryController < ApplicationController
+end

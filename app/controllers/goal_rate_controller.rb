@@ -1,0 +1,2 @@
+class GoalRateController < ApplicationController
+end

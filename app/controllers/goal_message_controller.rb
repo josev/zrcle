@@ -1,0 +1,2 @@
+class GoalMessageController < ApplicationController
+end
