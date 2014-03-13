@@ -19,3 +19,13 @@ pete:
   oauth_token: MyString
   oauth_expires_at: 2014-03-10
   password: MyString
+
+ron:
+  name: Ron
+  lastname: Quintos
+  email: ron@pv.com
+  provider: twitter
+  uid: uniquestring
+  oauth_token: oauth_token
+  oauth_expires_at: 2014-05-05
+  password: x
