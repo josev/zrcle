@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 1
+  name: MyString
+  description: MyText
+  image: MyString
+  category_id: 1
+  expected_result: MyText
+  date: 2014-03-10
+  goal_type_id: steps
+
+lose:
+  user_id: pete
+  name: Lose Weight
+  description: Lose the belly
+  image: Belly.Image
+  goal_category: sports
+  expected_result: How To Lose It
+  date: 2014-03-11
+  goal_type_id: progressive

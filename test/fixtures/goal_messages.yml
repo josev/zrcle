@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  from_user_id: 1
+  to_goal_id: 1
+  message: MyText
+  date: 2014-03-10
+
+two:
+  from_user_id: 1
+  to_goal_id: 1
+  message: MyText
+  date: 2014-03-10
