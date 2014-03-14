@@ -4,6 +4,8 @@ class Goal < ActiveRecord::Base
   belongs_to :goal_category
   belongs_to :goal_type
   has_many :comments
+  has_many :user_goals
+  has_many :followers, through: :user_goals, source: :user
   after_create :create_usergoal
 
   private

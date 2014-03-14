@@ -1,13 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
+buy_one:
   user: john
   goal: buy
 
-two:
+buy_two:
   user: pete
   goal: buy
 
-three:
+lose_one:
   user: pete
   goal: lose

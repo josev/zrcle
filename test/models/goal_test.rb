@@ -16,8 +16,7 @@ class GoalTest < ActiveSupport::TestCase
   end
 
   test "followers" do
-    assert_instance_of Array, @to_buy.followers
-    assert_equal @to_buy.followers, 2
+    assert_equal @to_buy.followers.count, 2
   end
 
   test "comments" do
