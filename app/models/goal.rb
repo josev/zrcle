@@ -3,7 +3,7 @@ class Goal < ActiveRecord::Base
   belongs_to :user
   belongs_to :goal_category
   belongs_to :goal_type
-
+  has_many :comments
   after_create :create_usergoal
 
   private

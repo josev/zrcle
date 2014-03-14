@@ -1,13 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  goal_id: 1
-  user_id: 1
-  comment: MyText
+buy_first:
+  goal: buy
+  user: john
+  comment: A comment posted under my goal.
   date: 2014-03-10
 
-two:
-  goal_id: 1
-  user_id: 1
-  comment: MyText
+lose_first:
+  goal: lose
+  user: pete
+  comment: This is about losing weight.
   date: 2014-03-10
