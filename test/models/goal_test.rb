@@ -25,7 +25,7 @@ class GoalTest < ActiveSupport::TestCase
 
   test "info" do
     assert @to_buy.description
-    assert @to_buy.results
+    assert @to_buy.expected_result
     assert @to_buy.rate
   end
 
