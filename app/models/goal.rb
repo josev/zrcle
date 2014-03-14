@@ -13,6 +13,11 @@ class Goal < ActiveRecord::Base
     self.goal_rates.average( :rate )
   end
 
+  def progress user
+    #TODO get progress according to steps accomplished by user (or any other logic)
+    0
+  end
+
   private
   def create_usergoal
     ug = UserGoal.create(user_id: self.user_id, goal_id: self.id, state: "0")
