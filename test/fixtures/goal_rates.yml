@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  user_id: 1
-  goal_id: 1
+buy_one:
+  user: pete
+  goal: buy
   rate: 1
 
-two:
-  user_id: 1
-  goal_id: 1
-  rate: 1
+buy_two:
+  user: ron
+  goal: buy
+  rate: 3

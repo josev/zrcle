@@ -6,10 +6,15 @@ class Goal < ActiveRecord::Base
   has_many :comments
   has_many :user_goals
   has_many :followers, through: :user_goals, source: :user
+  has_many :goal_rates
   after_create :create_usergoal
 
+  def rate
+    self.goal_rates.average( :rate )
+  end
+
   private
-    def create_usergoal
-      ug = UserGoal.create(user_id: self.user_id, goal_id: self.id, state: "0")
-    end
+  def create_usergoal
+    ug = UserGoal.create(user_id: self.user_id, goal_id: self.id, state: "0")
+  end
 end
