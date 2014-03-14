@@ -3,7 +3,7 @@ require 'test_helper'
 class UserGoalTest < ActiveSupport::TestCase
 
   def setup
-    @goal = user_goals(:one)
+    @goal = user_goals(:buy_one)
   end
 
   test "status" do

@@ -3,11 +3,14 @@
 buy_one:
   user: john
   goal: buy
+  state: 1
 
 buy_two:
   user: pete
   goal: buy
+  state: 1
 
 lose_one:
   user: pete
   goal: lose
+  state: 1
