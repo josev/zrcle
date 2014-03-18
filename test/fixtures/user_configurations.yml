@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  notificatio: false
+  new_message: false
+  new_follower: false
+  replies: false
+  likes: false
+
+two:
+  notificatio: false
+  new_message: false
+  new_follower: false
+  replies: false
+  likes: false

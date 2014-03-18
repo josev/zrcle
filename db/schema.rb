@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140310182725) do
+ActiveRecord::Schema.define(version: 20140318200927) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,15 @@ ActiveRecord::Schema.define(version: 20140310182725) do
     t.datetime "updated_at"
   end
 
+  create_table "comment_replies", force: true do |t|
+    t.integer  "comment_id"
+    t.integer  "user_id"
+    t.text     "comment"
+    t.datetime "date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "comments", force: true do |t|
     t.integer  "goal_id"
     t.integer  "user_id"
@@ -30,6 +39,7 @@ ActiveRecord::Schema.define(version: 20140310182725) do
     t.date     "date"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "to_user_id"
   end
 
   create_table "follow_goals", force: true do |t|
@@ -37,6 +47,7 @@ ActiveRecord::Schema.define(version: 20140310182725) do
     t.integer  "follow_goal_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "status"
   end
 
   create_table "follow_users", force: true do |t|
@@ -76,6 +87,15 @@ ActiveRecord::Schema.define(version: 20140310182725) do
     t.datetime "updated_at"
   end
 
+  create_table "goal_reminds", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "goal_id"
+    t.integer  "frequently"
+    t.time     "time"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "goal_step_calendars", force: true do |t|
     t.integer  "goal_id"
     t.integer  "user_id"
@@ -93,7 +113,6 @@ ActiveRecord::Schema.define(version: 20140310182725) do
   end
 
   create_table "goals", force: true do |t|
-    t.integer  "user_id"
     t.string   "name"
     t.text     "description"
     t.string   "image"
@@ -105,8 +124,27 @@ ActiveRecord::Schema.define(version: 20140310182725) do
     t.datetime "updated_at"
   end
 
+  create_table "levels", force: true do |t|
+    t.integer  "level_number"
+    t.integer  "required_points"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "profiles", force: true do |t|
     t.date     "date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "name"
+    t.string   "last_name"
+  end
+
+  create_table "user_configurations", force: true do |t|
+    t.boolean  "notificatio"
+    t.boolean  "new_message"
+    t.boolean  "new_follower"
+    t.boolean  "replies"
+    t.boolean  "likes"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -115,6 +153,15 @@ ActiveRecord::Schema.define(version: 20140310182725) do
     t.integer  "user_id"
     t.integer  "goal_id"
     t.string   "state"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "private"
+  end
+
+  create_table "user_levels", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "level_id"
+    t.integer  "points"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -129,8 +176,6 @@ ActiveRecord::Schema.define(version: 20140310182725) do
   end
 
   create_table "users", force: true do |t|
-    t.string   "name"
-    t.string   "lastname"
     t.string   "email"
     t.string   "provider"
     t.string   "uid"

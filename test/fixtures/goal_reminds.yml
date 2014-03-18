@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 1
+  goal_id: 1
+  frequently: 1
+  time: 2014-03-18 13:05:44
+
+two:
+  user_id: 1
+  goal_id: 1
+  frequently: 1
+  time: 2014-03-18 13:05:44
