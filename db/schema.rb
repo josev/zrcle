@@ -140,7 +140,8 @@ ActiveRecord::Schema.define(version: 20140318200927) do
   end
 
   create_table "user_configurations", force: true do |t|
-    t.boolean  "notificatio"
+    t.integer  "user_id"
+    t.boolean  "notification"
     t.boolean  "new_message"
     t.boolean  "new_follower"
     t.boolean  "replies"
