@@ -1,2 +1,0 @@
-class CommentLikeController < ApplicationController
-end
