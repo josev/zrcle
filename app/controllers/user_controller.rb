@@ -1,6 +1,19 @@
 class UserController < ApplicationController
   before_action :set_user, only: [:update, :destroy]
 
+  def index
+  end
+
+  def show
+  end
+
+  def new
+    @user = Employee.new
+  end
+
+  def edit
+  end
+
   def create
     @user=User.new(user_params)
     respond_to do |format|
