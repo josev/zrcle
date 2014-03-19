@@ -1,0 +1,2 @@
+class FollowGoalsController < ApplicationController
+end
