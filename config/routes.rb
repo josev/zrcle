@@ -1,6 +1,23 @@
 Zrcle::Application.routes.draw do
 
   resources :goals
+  resources :users
+  resources :comment_likes
+  resources :comment_replies
+  resources :comments
+  resources :follow_goals
+  resources :follow_users
+  resources :friendships
+  resources :goal_categories
+  resources :goal_rates
+  resources :goal_reminds
+  resources :goal_step_calendars
+  resources :goal_types
+  resources :levels
+  resources :profiles
+  resources :user_configurations
+  resources :user_goals
+  resources :user_levels
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -27,9 +27,19 @@ class GoalsController < ApplicationController
   end
 
   def update
+    if @goal.update(goal_params)
+      render json: @goal
+    else
+      render json: @goal.errors
+    end
   end
 
   def destroy
+    if @goal.destroy
+      render text: "Deleted"
+    else
+      render json: @goal.errors
+    end
   end
 
   private
