@@ -1,2 +1,0 @@
-class FollowUserController < ApplicationController
-end

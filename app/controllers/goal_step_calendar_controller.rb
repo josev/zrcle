@@ -1,2 +1,0 @@
-class GoalStepCalendarController < ApplicationController
-end
