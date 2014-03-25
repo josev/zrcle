@@ -7,6 +7,7 @@ class GoalsController < ApplicationController
   end
 
   def show
+    render json: @goal
   end
 
   def new
@@ -15,6 +16,7 @@ class GoalsController < ApplicationController
   end
 
   def edit
+    render json: @goal
   end
 
   def create

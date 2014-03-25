@@ -1,5 +1,5 @@
 class GoalRatesController < ApplicationController
-  before_action :set_goal_rate, only: [:update, :destroy]
+  before_action :set_goal_rate, only: [:show, :edit, :update, :destroy]
 
   def index
     @goal_rates = GoalRate.all
@@ -7,6 +7,7 @@ class GoalRatesController < ApplicationController
   end
 
   def show
+    render json: @goal_rates
   end
 
   def new
@@ -15,6 +16,7 @@ class GoalRatesController < ApplicationController
   end
 
   def edit
+    render json: @goal_rates
   end
 
   def create

@@ -1,5 +1,5 @@
 class LevelsController < ApplicationController
-	before_action :set_level, only: [:update, :destroy]
+	before_action :set_level, only: [:show, :edit, :update, :destroy]
 
   def index
     @levels = Level.all
@@ -7,6 +7,7 @@ class LevelsController < ApplicationController
   end
 
   def show
+    render json: @level
   end
 
   def new
@@ -15,6 +16,7 @@ class LevelsController < ApplicationController
   end
 
   def edit
+    render json: @level
   end
 
   def create

@@ -1,5 +1,5 @@
 class CommentRepliesController < ApplicationController
-	before_action :set_comment_reply, only: [:update, :destroy]
+	before_action :set_comment_reply, only: [:show, :edit, :update, :destroy]
 
   def index
     @comment_replies = CommentReply.all
@@ -7,6 +7,7 @@ class CommentRepliesController < ApplicationController
   end
 
   def show
+    render json: @comment_replies
   end
 
   def new
@@ -15,6 +16,7 @@ class CommentRepliesController < ApplicationController
   end
 
   def edit
+    render json: @comment_replies
   end
 
   def create

@@ -1,5 +1,5 @@
 class ProfilesController < ApplicationController
-  before_action :set_profile, only: [:update, :destroy]
+  before_action :set_profile, only: [:show, :edit, :update, :destroy]
 
   def index
     @profiles = Profile.all
@@ -7,6 +7,7 @@ class ProfilesController < ApplicationController
   end
 
   def show
+    render json: @profile
   end
 
   def new
@@ -15,6 +16,7 @@ class ProfilesController < ApplicationController
   end
 
   def edit
+    render json: @profile
   end
 
   def create

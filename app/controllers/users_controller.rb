@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   def index
     @users = User.all
@@ -7,6 +7,7 @@ class UsersController < ApplicationController
   end
 
   def show
+    render json: @user
   end
 
   def new
@@ -15,14 +16,15 @@ class UsersController < ApplicationController
   end
 
   def edit
+    render json: @user
   end
 
   def create
     @user=User.new(user_params)
     if @user.save
-      render @user
+      render json: @user
     else
-      render json: {errors: @user.errors user: @user}
+      render json: {errors: @user.errors}
     end
   end
 

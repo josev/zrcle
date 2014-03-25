@@ -1,5 +1,5 @@
 class CommentLikesController < ApplicationController
-  before_action :set_comment_like, only: [:update, :destroy]
+  before_action :set_comment_like, only: [:show, :edit, :update, :destroy]
 
   def index
     @comment_likes = CommentLike.all
@@ -7,6 +7,7 @@ class CommentLikesController < ApplicationController
   end
 
   def show
+    render json: @comment_likes
   end
 
   def new
@@ -15,6 +16,7 @@ class CommentLikesController < ApplicationController
   end
 
   def edit
+    render json: @comment_likes
   end
 
   def create

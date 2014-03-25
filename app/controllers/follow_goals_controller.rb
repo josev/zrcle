@@ -1,5 +1,5 @@
 class FollowGoalsController < ApplicationController
-  before_action :set_follow_goal, only: [:update, :destroy]
+  before_action :set_follow_goal, only: [:show, :edit, :update, :destroy]
 
   def index
     @follow_goals = FollowGoal.all
@@ -7,6 +7,7 @@ class FollowGoalsController < ApplicationController
   end
 
   def show
+    render json: @follow_goal
   end
 
   def new
@@ -15,6 +16,7 @@ class FollowGoalsController < ApplicationController
   end
 
   def edit
+    render json: @follow_goal
   end
 
   def create

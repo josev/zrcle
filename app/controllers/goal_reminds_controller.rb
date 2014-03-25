@@ -1,5 +1,5 @@
 class GoalRemindsController < ApplicationController
-  before_action :set_goal_remind, only: [:update, :destroy]
+  before_action :set_goal_remind, only: [:show, :edit, :update, :destroy]
 
   def index
     @goal_reminds = GoalRemind.all
@@ -7,6 +7,7 @@ class GoalRemindsController < ApplicationController
   end
 
   def show
+    render json: @goal_remind
   end
 
   def new
@@ -15,6 +16,7 @@ class GoalRemindsController < ApplicationController
   end
 
   def edit
+    render json: @goal_remind
   end
 
   def create

@@ -1,5 +1,5 @@
 class GoalStepCalendarsController < ApplicationController
-  before_action :set_goal_step_calendar, only: [:update, :destroy]
+  before_action :set_goal_step_calendar, only: [:show, :edit, :update, :destroy]
 
   def index
     @goal_step_calendars = GoalStepCalendar.all
@@ -7,6 +7,7 @@ class GoalStepCalendarsController < ApplicationController
   end
 
   def show
+    render json: @goal_step_calendar
   end
 
   def new
@@ -15,6 +16,7 @@ class GoalStepCalendarsController < ApplicationController
   end
 
   def edit
+    render json: @goal_step_calendar
   end
 
   def create

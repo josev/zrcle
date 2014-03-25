@@ -1,5 +1,5 @@
 class FriendshipsController < ApplicationController
-  before_action :set_frienship, only: [:update, :destroy]
+  before_action :set_frienship, only: [:show, :edit, :update, :destroy]
 
   def index
     @friendships = Friendship.all
@@ -7,6 +7,7 @@ class FriendshipsController < ApplicationController
   end
 
   def show
+    render json: @friendships
   end
 
   def new
@@ -15,6 +16,7 @@ class FriendshipsController < ApplicationController
   end
 
   def edit
+    render json: @friendships
   end
 
   def create

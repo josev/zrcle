@@ -1,5 +1,5 @@
 class UserGoalsController < ApplicationController
-  before_action :set_user_goal, only: [:update, :destroy]
+  before_action :set_user_goal, only: [:show, :edit, :update, :destroy]
 
   def index
     @user_goals = UserGoal.all
@@ -7,6 +7,7 @@ class UserGoalsController < ApplicationController
   end
 
   def show
+    render json: @user_goal
   end
 
   def new
@@ -15,6 +16,7 @@ class UserGoalsController < ApplicationController
   end
 
   def edit
+    render json: @user_goal
   end
 
   def create

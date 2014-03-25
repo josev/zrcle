@@ -1,5 +1,5 @@
 class GoalTypesController < ApplicationController
-  before_action :set_goal_type, only: [:update, :destroy]
+  before_action :set_goal_type, only: [:show, :edit, :update, :destroy]
 
   def index
     @goal_types = GoalType.all
@@ -7,6 +7,7 @@ class GoalTypesController < ApplicationController
   end
 
   def show
+    render json: @goal_type
   end
 
   def new
@@ -15,6 +16,7 @@ class GoalTypesController < ApplicationController
   end
 
   def edit
+    render json: @goal_type
   end
 
   def create

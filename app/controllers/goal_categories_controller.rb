@@ -1,5 +1,5 @@
 class GoalCategoriesController < ApplicationController
-	before_action :set_goal_category, only: [:update, :destroy]
+	before_action :set_goal_category, only: [:show, :edit, :update, :destroy]
 
   def index
     @goal_categories = GoalCategory.all
@@ -7,6 +7,7 @@ class GoalCategoriesController < ApplicationController
   end
 
   def show
+    render json: @goal_categories
   end
 
   def new
@@ -15,6 +16,7 @@ class GoalCategoriesController < ApplicationController
   end
 
   def edit
+    render json: @goal_categories
   end
 
   def create

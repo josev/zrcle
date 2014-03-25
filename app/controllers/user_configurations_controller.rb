@@ -1,5 +1,5 @@
 class UserConfigurationsController < ApplicationController
-  before_action :set_user_configuration, only: [:update, :destroy]
+  before_action :set_user_configuration, only: [:show, :edit, :update, :destroy]
 
   def index
     @user_configurations = UserConfiguration.all
@@ -7,6 +7,7 @@ class UserConfigurationsController < ApplicationController
   end
 
   def show
+    render json: @user_configuration
   end
 
   def new
@@ -15,6 +16,7 @@ class UserConfigurationsController < ApplicationController
   end
 
   def edit
+    render json: @user_configuration
   end
 
   def create

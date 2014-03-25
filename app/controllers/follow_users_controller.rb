@@ -1,5 +1,5 @@
 class FollowUsersController < ApplicationController
-  before_action :set_follow_user, only: [:update, :destroy]
+  before_action :set_follow_user, only: [:show, :edit, :update, :destroy]
 
   def index
     @follow_users = FollowUser.all
@@ -7,6 +7,7 @@ class FollowUsersController < ApplicationController
   end
 
   def show
+    render json: @follow_users
   end
 
   def new
@@ -15,6 +16,7 @@ class FollowUsersController < ApplicationController
   end
 
   def edit
+    render json: @follow_users
   end
 
   def create

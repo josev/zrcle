@@ -1,5 +1,5 @@
 class UserLevelsController < ApplicationController
-  before_action :set_user_level, only: [:update, :destroy]
+  before_action :set_user_level, only: [:show, :edit, :update, :destroy]
 
   def index
     @user_levels = UserLevel.all
@@ -7,6 +7,7 @@ class UserLevelsController < ApplicationController
   end
 
   def show
+    render json: @user_level
   end
 
   def new
@@ -15,6 +16,7 @@ class UserLevelsController < ApplicationController
   end
 
   def edit
+    render json: @user_level
   end
 
   def create
