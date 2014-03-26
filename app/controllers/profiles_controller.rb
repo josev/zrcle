@@ -2,7 +2,13 @@ class ProfilesController < ApplicationController
   before_action :set_profile, only: [:show, :edit, :update, :destroy]
 
   def index
-    @profiles = Profile.all
+    if params[:profile_id].present?
+      @profiles = Profile.find_by_id(params[:profile_id])
+    elsif params[:user_id].present?
+      @profiles = Profile.where(user_id: params[:user_id])
+    else
+      @profiles = Profile.all
+    end
     render json: @profiles
   end
 
@@ -22,9 +28,9 @@ class ProfilesController < ApplicationController
   def create
     @profile=Profile.new(profile_params)
     if @profile.save
-      render @profile
+      render json: @profile
     else
-      render json: @profile.errors
+      render json: {errors: @profile.errors}
     end
   end
 
@@ -32,7 +38,7 @@ class ProfilesController < ApplicationController
     if @profile.update(profile_params)
       render json: @profile
     else
-      render json: @profile.errors
+      render json: {errors: @profile.errors}
     end
   end
 
@@ -40,13 +46,13 @@ class ProfilesController < ApplicationController
     if @profile.destroy
       render text: "Deleted"
     else
-      render json: @profile.errors
+      render json: {errors: @profile.errors}
     end
   end
 
   private
     def set_profile
-      @profile = Profile.find(params[:id])
+      @profile = Profile.find_by_id(params[:id])
     end
 
     def profile_params

@@ -2,7 +2,15 @@ class UserLevelsController < ApplicationController
   before_action :set_user_level, only: [:show, :edit, :update, :destroy]
 
   def index
-    @user_levels = UserLevel.all
+    if params[:user_level_id].present?
+      @user_levels = UserLevel.find_by_id(params[:user_level_id])
+    elsif params[:user_id].present?
+      @user_levels = UserLevel.where(user_id: params[:user_id])
+    elsif params[:level_id].present?
+      @user_levels = UserLevel.where(level_id: params[:level_id])
+    else
+      @user_levels = UserLevel.all
+    end
     render json: @user_levels
   end
 
@@ -22,9 +30,9 @@ class UserLevelsController < ApplicationController
   def create
     @user_level=UserLevel.new(user_level_params)
     if @user_level.save
-      render @user_level
+      render json: @user_level
     else
-      render json: @user_level.errors
+      render json: {errors: @user_level.errors}
     end
   end
 
@@ -32,7 +40,7 @@ class UserLevelsController < ApplicationController
     if @user_level.update(user_level_params)
       render json: @user_level
     else
-      render json: @user_level.errors
+      render json: {errors: @user_level.errors}
     end
   end
 
@@ -40,13 +48,13 @@ class UserLevelsController < ApplicationController
     if @user_level.destroy
       render text: "Deleted"
     else
-      render json: @user_level.errors
+      render json: {errors: @user_level.errors}
     end
   end
 
   private
     def set_user_level
-      @user_level = UserLevel.find(params[:id])
+      @user_level = UserLevel.find_by_id(params[:id])
     end
 
     def user_level_params

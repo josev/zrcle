@@ -1,10 +1,14 @@
 Zrcle::Application.routes.draw do
 
   resources :goals do
-    resources :goal_types, :user_goals
+    resources :goal_types, only: [:index, :show]
+    resources :user_goals, only: [:index, :show]
+    resources :goal_categories, only: [:index, :show]
+    resources :users, only: [:index, :show]
   end
   resources :users do
-    resources :user_goals
+    resources :user_goals, only: [:index]
+    resources :goals, only: [:index]
   end
   resources :comment_likes
   resources :comment_replies

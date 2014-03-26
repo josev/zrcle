@@ -2,7 +2,15 @@ class UserGoalsController < ApplicationController
   before_action :set_user_goal, only: [:show, :edit, :update, :destroy]
 
   def index
-    @user_goals = UserGoal.all
+    if params[:user_goal_id].present?
+      @user_goals = UserGoal.find_by_id(params[:user_goal_id])
+    elsif params[:user_id].present?
+      @user_goals = UserGoal.where(user_id: params[:user_id])
+    elsif params[:goal_id].present?
+      @user_goals = UserGoal.where(goal_id: params[:goal_id])
+    else
+      @user_goals = UserGoal.all
+    end
     render json: @user_goals
   end
 
@@ -24,7 +32,7 @@ class UserGoalsController < ApplicationController
     if @user_goal.save
       render json: @user_goal
     else
-      render json: @user_goal.errors
+      render json: {errors: @user_goal.errors}
     end
   end
 
@@ -32,21 +40,21 @@ class UserGoalsController < ApplicationController
     if @user_goal.update(user_goal_params)
       render json: @user_goal
     else
-      render json: @user_goal.errors
+      render json: {errors: @user_goal.errors}
     end
   end
 
   def destroy
     if @user_goal.destroy
-      render text: "Deleted"
+      render json: {text: "Deleted"}
     else
-      render json: @user_goal.errors
+      render json: {errors: @user_goal.errors}
     end
   end
 
   private
     def set_user_goal
-      @user_goal = UserGoal.find(params[:id])
+      @user_goal = UserGoal.find_by_id(params[:id])
     end
 
     def user_goal_params

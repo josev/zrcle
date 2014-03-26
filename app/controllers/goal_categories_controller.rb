@@ -2,7 +2,14 @@ class GoalCategoriesController < ApplicationController
 	before_action :set_goal_category, only: [:show, :edit, :update, :destroy]
 
   def index
-    @goal_categories = GoalCategory.all
+    if params[:goal_category_id].present?
+      @goal_categories = GoalCategory.find_by_id(params[:goal_category_id])
+    elsif params[:goal_id].present?
+      @goal = Goal.find_by_id(id: params[:goal_id])
+      @goal_categories = @goal.goal_category
+    else
+      @goal_categories = GoalCategory.all
+    end
     render json: @goal_categories
   end
 
@@ -24,7 +31,7 @@ class GoalCategoriesController < ApplicationController
     if @goal_category.save
       render json: @goal_category
     else
-      render json: @goal_category.errors
+      render json: {errors: @goal_category.errors}
     end
   end
 
@@ -32,21 +39,21 @@ class GoalCategoriesController < ApplicationController
     if @goal_category.update(goal_category_params)
       render json: @goal_category
     else
-      render json: @goal_category.errors
+      render json: {errors: @goal_category.errors}
     end
   end
 
   def destroy
     if @goal_category.destroy
-      render text: "Deleted"
+      render json: {text: "Deleted"}
     else
-      render json: @goal_category.errors
+      render json: {errors: @goal_category.errors}
     end
   end
 
   private
     def set_goal_category
-      @goal_category = GoalCategory.find(params[:id])
+      @goal_category = GoalCategory.find_by_id(params[:id])
     end
 
     def goal_category_params

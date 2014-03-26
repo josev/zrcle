@@ -4,6 +4,8 @@ class GoalsController < ApplicationController
   def index
     if params[:goal_type_id].present?
       @goals = Goal.where(goal_type_id: params[:goal_type_id])
+    elsif params[:goal_category_id].present?
+      @goals = Goal.where(goal_category_id: params[:goal_category_id])
     else
       @goals = Goal.all
     end
@@ -29,7 +31,7 @@ class GoalsController < ApplicationController
     if @goal.save
       render json: @goal
     else
-      render json: @goal.errors
+      render json: {errors: @goal.errors}
     end
   end
 
@@ -37,21 +39,21 @@ class GoalsController < ApplicationController
     if @goal.update(goal_params)
       render json: @goal
     else
-      render json: @goal.errors
+      render json: {errors: @goal.errors}
     end
   end
 
   def destroy
     if @goal.destroy
-      render text: "Deleted"
+      render json: {text: "Deleted"}
     else
-      render json: @goal.errors
+      render json: {errors: @goal.errors}
     end
   end
 
   private
     def set_goal
-      @goal = Goal.find(params[:id])
+      @goal = Goal.find_by_id(params[:id])
     end
 
     def goal_params

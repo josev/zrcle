@@ -2,7 +2,11 @@ class LevelsController < ApplicationController
 	before_action :set_level, only: [:show, :edit, :update, :destroy]
 
   def index
-    @levels = Level.all
+    if params[:level_id].present?
+      @levels = Level.find_by_id(params[:level_id])
+    else
+      @levels = Level.all
+    end
     render json: @levels
   end
 
@@ -22,9 +26,9 @@ class LevelsController < ApplicationController
   def create
     @level=Level.new(level_params)
     if @level.save
-      render @level
+      render json: @level
     else
-      render json: @level.errors
+      render json: {errors: @level.errors}
     end
   end
 
@@ -32,21 +36,21 @@ class LevelsController < ApplicationController
     if @level.update(level_params)
       render json: @level
     else
-      render json: @level.errors
+      render json: {errors: @level.errors}
     end
   end
 
   def destroy
     if @level.destroy
-      render text: "Deleted"
+      render json: {text: "Deleted"}
     else
-      render json: @level.errors
+      render json: {errors: @level.errors}
     end
   end
 
   private
     def set_level
-      @level = Level.find(params[:id])
+      @level = Level.find_by_id(params[:id])
     end
 
     def level_params

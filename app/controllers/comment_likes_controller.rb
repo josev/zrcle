@@ -2,7 +2,15 @@ class CommentLikesController < ApplicationController
   before_action :set_comment_like, only: [:show, :edit, :update, :destroy]
 
   def index
-    @comment_likes = CommentLike.all
+    if params[:comment_id].present?
+      @comment_likes = CommentLike.where(comment_id: params[:comment_id])
+    elsif params[:user_id].present?
+      @comment_likes = CommentLike.where(user_id: params[:user_id])
+    elsif params[:comment_like_id].present?
+      @comment_likes = CommentLike.fin_by_id(params[:comment_like_id])
+    else
+      @comment_likes = CommentLike.all
+    end
     render json: @comment_likes
   end
 
@@ -24,7 +32,7 @@ class CommentLikesController < ApplicationController
     if @comment_like.save
       render @comment_like
     else
-      render json: @comment_like.errors
+      render json: {errors: @comment_like.errors}
     end
   end
 
@@ -32,21 +40,21 @@ class CommentLikesController < ApplicationController
     if @comment_like.update(comment_like_params)
       render json: @comment_like
     else
-      render json: @comment_like.errors
+      render json: {errors: @comment_like.errors}
     end
   end
 
   def destroy
     if @comment_like.destroy
-      render text: "Deleted"
+      render json: {text: "Deleted"}
     else
-      render json: @comment_like.errors
+      render json: {errors: @comment_like.errors}
     end
   end
 
   private
     def set_comment_like
-      @comment_like = CommentLike.find(params[:id])
+      @comment_like = CommentLike.find_by_id(params[:id])
     end
     def comment_like_params
       params.require(:comment_like).permit(:comment_id, :user_id)

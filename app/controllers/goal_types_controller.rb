@@ -51,7 +51,7 @@ class GoalTypesController < ApplicationController
 
   private
     def set_goal_type
-      @goal_type = GoalType.find(params[:id])
+      @goal_type = GoalType.find_by_id(params[:id])
     end
 
     def goal_type_params

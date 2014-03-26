@@ -2,7 +2,15 @@ class CommentsController < ApplicationController
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
 
   def index
-    @comments = Comment.all
+    if params[:goal_id].present?
+      @comments = Comment.where(goal_id: params[:goal_id])
+    elsif params[:user_id].present?
+      @comments = Comment.where(user_id: params[:user_id])
+    elsif params[:comment_id].present?
+      @comments = Comment.find_by_id(params[:comment_id])
+    else
+      @comments = Comment.all
+    end
     render json: @comments
   end
 
@@ -22,9 +30,9 @@ class CommentsController < ApplicationController
   def create
     @comment=Comment.new(comment_params)
     if @comment.save
-      render @comment
+      render json: @comment
     else
-      render json: @comment.errors
+      render json: {errors: @comment.errors}
     end
   end
 
@@ -32,21 +40,21 @@ class CommentsController < ApplicationController
     if @comment.update(comment_params)
       render json: @comment
     else
-      render json: @comment.errors
+      render json: {errors: @comment.errors}
     end
   end
 
   def destroy
     if @comment.destroy
-      render text: "Deleted"
+      render json: {text: "Deleted"}
     else
-      render json: @comment.errors
+      render json: {errors: @comment.errors}
     end
   end
 
   private
     def set_comment
-      @comment = Comment.find(params[:id])
+      @comment = Comment.find_by_id(params[:id])
     end
 
     def comment_params

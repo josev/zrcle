@@ -2,7 +2,15 @@ class GoalRatesController < ApplicationController
   before_action :set_goal_rate, only: [:show, :edit, :update, :destroy]
 
   def index
-    @goal_rates = GoalRate.all
+    if params[:goal_id].present?
+      @goal_rates = GoalRate.where(goal_id: params[:goal_id])
+    elsif params[:user_id]
+      @goal_rates = GoalRate.where(user_id: params[:user_id])
+    elsif params[:goal_rate_id].present?
+      @goal_rates = GoalRate.find_by_id(params[:goal_rate_id])
+    else
+      @goal_rates = GoalRate.all
+    end
     render json: @goal_rates
   end
 
@@ -22,9 +30,9 @@ class GoalRatesController < ApplicationController
   def create
     @goal_rate=GoalRate.new(goal_rate_params)
     if @goal_rate.save
-      render @goal_rate
+      render json: @goal_rate
     else
-      render json: @goal_rate.errors
+      render json: {errors: @goal_rate.errors}
     end
   end
 
@@ -32,21 +40,21 @@ class GoalRatesController < ApplicationController
     if @goal_rate.update(goal_rate_params)
       render json: @goal_rate
     else
-      render json: @goal_rate.errors
+      render json: {errors: @goal_rate.errors}
     end
   end
 
   def destroy
     if @goal_rate.destroy
-      render text: "Deleted"
+      render json: {text: "Deleted"}
     else
-      render json: @goal_rate.errors
+      render json: {errors: @goal_rate.errors}
     end
   end
 
   private
     def set_goal_rate
-      @goal_rate = GoalRate.find(params[:id])
+      @goal_rate = GoalRate.find_by_id(params[:id])
     end
 
     def goal_rate_params

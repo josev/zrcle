@@ -2,7 +2,15 @@ class CommentRepliesController < ApplicationController
 	before_action :set_comment_reply, only: [:show, :edit, :update, :destroy]
 
   def index
-    @comment_replies = CommentReply.all
+    if params[:comment_id].present?
+      @comment_replies = CommentReply.where(comment_id: params[:comment_id])
+    elsif params[:user_id].present?
+      @comment_replies = CommentReply.where(user_id: params[:user_id])
+    elsif params[:comment_reply_id].present?
+      @comment_replies = CommentReply.find_by_id(params[:comment_reply_id])
+    else
+      @comment_replies = CommentReply.all
+    end
     render json: @comment_replies
   end
 
@@ -24,7 +32,7 @@ class CommentRepliesController < ApplicationController
     if @comment_reply.save
       render @comment_reply
     else
-      render json: @comment_reply.errors
+      render json: {errors: @comment_reply.errors}
     end
   end
 
@@ -32,15 +40,15 @@ class CommentRepliesController < ApplicationController
     if @comment_reply.update(comment_reply_params)
       render json: @comment_reply
     else
-      render json: @comment_reply.errors
+      render json: {errors: @comment_reply.errors}
     end
   end
 
   def destroy
     if @comment_reply.destroy
-      render text: "Deleted"
+      render json: {text: "Deleted"}
     else
-      render json: @comment_reply.errors
+      render json: {errors: @comment_reply.errors}
     end
   end
 

@@ -2,7 +2,15 @@ class GoalStepCalendarsController < ApplicationController
   before_action :set_goal_step_calendar, only: [:show, :edit, :update, :destroy]
 
   def index
-    @goal_step_calendars = GoalStepCalendar.all
+    if params[:goal_id].present?
+      @goal_step_calendars = GoalStepCalendar.where(goal_id: params[:goal_id])
+    elsif params[:user_id].present?
+      @goal_step_calendars = GoalStepCalendar.where(user_id: params[:user_id])
+    elsif params[:goal_step_calendar_id].present?
+      @goal_step_calendars = GoalStepCalendar.find_by_id(params[:goal_step_calendar_id])
+    else
+      @goal_step_calendars = GoalStepCalendar.all
+    end
     render json: @goal_step_calendars
   end
 
@@ -22,9 +30,9 @@ class GoalStepCalendarsController < ApplicationController
   def create
     @goal_step_calendar=GoalStepCalendar.new(goal_step_calendar_params)
     if @goal_step_calendar.save
-      render @goal_step_calendar
+      render json: @goal_step_calendar
     else
-      render json: @goal_step_calendar.errors
+      render json: {errors: @goal_step_calendar.errors}
     end
   end
 
@@ -32,15 +40,15 @@ class GoalStepCalendarsController < ApplicationController
     if @goal_step_calendar.update(goal_step_calendar_params)
       render json: @goal_step_calendar
     else
-      render json: @goal_step_calendar.errors
+      render json: {errors: @goal_step_calendar.errors}
     end
   end
 
   def destroy
     if @goal_step_calendar.destroy
-      render text: "Deleted"
+      render json: {text: "Deleted"}
     else
-      render json: @goal_step_calendar.errors
+      render json: {errors: @goal_step_calendar.errors}
     end
   end
 

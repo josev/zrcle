@@ -2,7 +2,15 @@ class GoalRemindsController < ApplicationController
   before_action :set_goal_remind, only: [:show, :edit, :update, :destroy]
 
   def index
-    @goal_reminds = GoalRemind.all
+    if params[:user_id].present?
+      @goal_reminds = GoalRemind.where(user_id: params[:user_id])
+    elsif params[:goal_id].present?
+      @goal_reminds = GoalRemind.where(goal_id: params[:goal_id])
+    elsif params[:goal_remind_id].present?
+      @goal_reminds = GoalRemind.find_by_id(params[:goal_remind_id])
+    else
+      @goal_reminds = GoalRemind.all
+    end
     render json: @goal_reminds
   end
 
@@ -22,9 +30,9 @@ class GoalRemindsController < ApplicationController
   def create
     @goal_remind=GoalRemind.new(goal_remind_params)
     if @goal_remind.save
-      render @goal_remind
+      render json: @goal_remind
     else
-      render json: @goal_remind.errors
+      render json: {errors: @goal_remind.errors}
     end
   end
 
@@ -32,21 +40,21 @@ class GoalRemindsController < ApplicationController
     if @goal_remind.update(goal_remind_params)
       render json: @goal_remind
     else
-      render json: @goal_remind.errors
+      render json: {errors: @goal_remind.errors}
     end
   end
 
   def destroy
     if @goal_remind.destroy
-      render text: "Deleted"
+      render json: {text: "Deleted"}
     else
-      render json: @goal_remind.errors
+      render json: {errors: @goal_remind.errors}
     end
   end
 
   private
     def set_goal_remind
-      @goal_remind = GoalRemind.find(params[:id])
+      @goal_remind = GoalRemind.find_by_id(params[:id])
     end
 
     def goal_remind_params

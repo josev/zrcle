@@ -2,7 +2,15 @@ class FriendshipsController < ApplicationController
   before_action :set_frienship, only: [:show, :edit, :update, :destroy]
 
   def index
-    @friendships = Friendship.all
+    if params[:user_id].present?
+      @friendships = Friendship.where(user_id: params[:user_id])
+    elsif params[:friend_id].present?
+      @friendships = Friendship.where(friend_id: params[:friend_id])
+    elsif params[:friendship_id]
+      @friendships = Friendship.find_by_id(params[:friendship_id])
+    else
+      @friendships = Friendship.all
+    end
     render json: @friendships
   end
 
@@ -22,9 +30,9 @@ class FriendshipsController < ApplicationController
   def create
     @friendship=Friendship.new(friendship_params)
     if @friendship.save
-      render @friendship
+      render json: @friendship
     else
-      render json: @friendship.errors
+      render json: {errors: @friendship.errors}
     end
   end
 
@@ -32,7 +40,7 @@ class FriendshipsController < ApplicationController
     if @friendship.update(friendship_params)
       render json: @friendship
     else
-      render json: @friendship.errors
+      render json: {errors: @friendship.errors}
     end
   end
 
@@ -40,13 +48,13 @@ class FriendshipsController < ApplicationController
     if @friendship.destroy
       render text: "Deleted"
     else
-      render json: @friendship.errors
+      render json: {errors: @friendship.errors}
     end
   end
 
   private
     def set_friendship
-      @friendship = Friendship.find(params[:id])
+      @friendship = Friendship.find_by_id(params[:id])
     end
 
     def friendship_params

@@ -2,7 +2,13 @@ class FollowGoalsController < ApplicationController
   before_action :set_follow_goal, only: [:show, :edit, :update, :destroy]
 
   def index
-    @follow_goals = FollowGoal.all
+    if params[:follow_goal_id]
+      @follow_goals = FollowGoal.find_by_id(params[:follow_goal_id])
+    elsif params[:user_id]
+      @follow_goals = FollowGoal.where(user_id: params[:user_id])
+    else
+      @follow_goals = FollowGoal.all
+    end
     render json: @follow_goals
   end
 
@@ -22,9 +28,9 @@ class FollowGoalsController < ApplicationController
   def create
     @follow_goal=FollowGoal.new(follow_goal_params)
     if @follow_goal.save
-      render @follow_goal
+      render json: @follow_goal
     else
-      render json: @follow_goal.errors
+      render json: {errors: @follow_goal.errors}
     end
   end
 
@@ -32,21 +38,21 @@ class FollowGoalsController < ApplicationController
     if @follow_goal.update(follow_goal_params)
       render json: @follow_goal
     else
-      render json: @follow_goal.errors
+      render json: {errors: @follow_goal.errors}
     end
   end
 
   def destroy
     if @follow_goal.destroy
-      render text: "Deleted"
+      render json: {text: "Deleted"}
     else
-      render json: @follow_goal.errors
+      render json: {errors: @follow_goal.errors}
     end
   end
 
   private
     def set_follow_goal
-      @follow_goal = FollowGoal.find(params[:id])
+      @follow_goal = FollowGoal.find_by_id(params[:id])
     end
 
     def follow_goal_params
