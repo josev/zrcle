@@ -2,7 +2,12 @@ class GoalTypesController < ApplicationController
   before_action :set_goal_type, only: [:show, :edit, :update, :destroy]
 
   def index
-    @goal_types = GoalType.all
+    if params[:goal_id].present?
+      @goal = Goal.find_by_id(params["goal_id"])
+      @goal_types = @goal.goal_type
+    else
+      @goal_types = GoalType.all
+    end
     render json: @goal_types
   end
 
@@ -24,7 +29,7 @@ class GoalTypesController < ApplicationController
     if @goal_type.save
       render json: @goal_type
     else
-      render json: @goal_type.errors
+      render json: {errors: @goal_type.errors}
     end
   end
 
@@ -32,7 +37,7 @@ class GoalTypesController < ApplicationController
     if @goal_type.update(goal_type_params)
       render json: @goal_type
     else
-      render json: @goal_type.errors
+      render json: {errors: @goal_type.errors}
     end
   end
 
@@ -40,7 +45,7 @@ class GoalTypesController < ApplicationController
     if @goal_type.destroy
       render json: {text: "Deleted"}
     else
-      render json: @goal_type.errors
+      render json: {errors: @goal_type.errors}
     end
   end
 

@@ -2,7 +2,11 @@ class GoalsController < ApplicationController
   before_action :set_goal, only: [:show, :edit, :update, :destroy]
   
   def index
-    @goals = Goal.all
+    if params[:goal_type_id].present?
+      @goals = Goal.where(goal_type_id: params[:goal_type_id])
+    else
+      @goals = Goal.all
+    end
     render json: @goals
   end
 

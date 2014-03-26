@@ -1,9 +1,8 @@
 class Goal < ActiveRecord::Base
 	validates :name, :description, :goal_category_id, :expected_result, :date, :goal_type_id, presence: true
 	has_many :user
-	has_one :goal_category
-	has_one :goal_type
-
+	belongs_to :goal_category
+	belongs_to :goal_type
 
 	#after_create :create_usergoal
 

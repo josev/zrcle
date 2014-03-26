@@ -1,22 +1,18 @@
 Zrcle::Application.routes.draw do
 
   resources :goals do
-    resources :goal_step_calendars, :comments,:follow_goals,:goal_rates, :user_goals, :goal_types
+    resources :goal_types, :user_goals
   end
   resources :users do
-    resources :profiles, :user_configurations, :goal_reminds, :friendships, :user_levels, :user_goals
+    resources :user_goals
   end
   resources :comment_likes
   resources :comment_replies
-  resources :comments do
-    resources :comment_replies, :comment_likes
-  end
+  resources :comments
   resources :follow_goals
   resources :follow_users
   resources :friendships
-  resources :goal_categories do
-    resources :goals
-  end
+  resources :goal_categories
   resources :goal_rates
   resources :goal_reminds
   resources :goal_step_calendars
