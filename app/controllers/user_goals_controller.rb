@@ -36,6 +36,30 @@ class UserGoalsController < ApplicationController
     end
   end
 
+  def create_by_goals
+    @user_goal=UserGoal.new
+    @user_goal.user_id = params[:id]
+    @user_goal.goal_id = params[:goal_id]
+    @user_goal.state = "1"
+    if @user_goal.save
+      render json: @user_goal
+    else
+      render json: {errors: @user_goal.errors}
+    end
+  end
+
+  def create_by_users
+    @user_goal=UserGoal.new
+    @user_goal.user_id = params[:user_id]
+    @user_goal.goal_id = params[:id]
+    @user_goal.state = "1"
+    if @user_goal.save
+      render json: @user_goal
+    else
+      render json: {errors: @user_goal.errors}
+    end
+  end
+
   def update
     if @user_goal.update(user_goal_params)
       render json: @user_goal

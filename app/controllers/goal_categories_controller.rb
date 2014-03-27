@@ -5,7 +5,7 @@ class GoalCategoriesController < ApplicationController
     if params[:goal_category_id].present?
       @goal_categories = GoalCategory.find_by_id(params[:goal_category_id])
     elsif params[:goal_id].present?
-      @goal = Goal.find_by_id(id: params[:goal_id])
+      @goal = Goal.find_by_id(params[:goal_id])
       @goal_categories = @goal.goal_category
     else
       @goal_categories = GoalCategory.all

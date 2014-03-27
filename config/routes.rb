@@ -5,14 +5,25 @@ Zrcle::Application.routes.draw do
     resources :user_goals, only: [:index, :show]
     resources :goal_categories, only: [:index, :show]
     resources :users, only: [:index, :show]
+    resources :goal_reminds, only: [:index, :show]
+    resources :goal_rates, only: [:index, :show]
+    resources :goal_step_calendars, only: [:index, :show]
+    resources :comments, only: [:index, :show]
   end
   resources :users do
-    resources :user_goals, only: [:index]
-    resources :goals, only: [:index]
+    resources :user_goals, only: [:index, :show]
+    resources :goals, only: [:index, :show]
+    resources :user_configurations, only: [:index, :show]
+    resources :profiles, only: [:index, :show]
+    resources :follow_goals, only: [:index, :show]
+    resources :friendships, only: [:index, :show]
   end
   resources :comment_likes
   resources :comment_replies
-  resources :comments
+  resources :comments do
+    resources :comment_replies, only: [:index, :show]
+    resources :comment_likes, only: [:index, :show]
+  end
   resources :follow_goals
   resources :follow_users
   resources :friendships
@@ -26,9 +37,15 @@ Zrcle::Application.routes.draw do
   resources :profiles
   resources :user_configurations
   resources :user_goals do
-    resources :goals, :users
+    resources :goals, only: [:index, :show]
+    resources :users, only: [:index, :show]
   end
   resources :user_levels
+
+  match '/goals/:goal_id/users/:id', to: 'user_goals#create_by_goals',:via => [:post]
+  match '/users/:user_id/goals/:id', to: 'user_goals#create_by_users',:via => [:post]
+
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

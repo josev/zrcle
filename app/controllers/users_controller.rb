@@ -7,7 +7,7 @@ class UsersController < ApplicationController
     elsif params[:goal_id].present?
       @user_goals = UserGoal.select("user_id AS id").where(goal_id: params[:goal_id])
       if @user_goals.present?
-        @users = User.find(@user_goals)
+        @users = User.where(id: @user_goals)
       end
     else
       @users = User.all
