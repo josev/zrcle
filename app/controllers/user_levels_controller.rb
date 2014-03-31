@@ -2,15 +2,7 @@ class UserLevelsController < ApplicationController
   before_action :set_user_level, only: [:show, :edit, :update, :destroy]
 
   def index
-    if params[:user_level_id].present?
-      @user_levels = UserLevel.find_by_id(params[:user_level_id])
-    elsif params[:user_id].present?
-      @user_levels = UserLevel.where(user_id: params[:user_id])
-    elsif params[:level_id].present?
-      @user_levels = UserLevel.where(level_id: params[:level_id])
-    else
-      @user_levels = UserLevel.all
-    end
+    @user_levels = UserLevel.get_user_levels(params)
     render json: @user_levels
   end
 

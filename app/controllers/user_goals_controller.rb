@@ -2,15 +2,7 @@ class UserGoalsController < ApplicationController
   before_action :set_user_goal, only: [:show, :edit, :update, :destroy]
 
   def index
-    if params[:user_goal_id].present?
-      @user_goals = UserGoal.find_by_id(params[:user_goal_id])
-    elsif params[:user_id].present?
-      @user_goals = UserGoal.where(user_id: params[:user_id])
-    elsif params[:goal_id].present?
-      @user_goals = UserGoal.where(goal_id: params[:goal_id])
-    else
-      @user_goals = UserGoal.all
-    end
+    @user_goals = UserGoal.get_user_goals(params)
     render json: @user_goals
   end
 

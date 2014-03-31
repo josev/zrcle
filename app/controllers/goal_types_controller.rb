@@ -2,12 +2,7 @@ class GoalTypesController < ApplicationController
   before_action :set_goal_type, only: [:show, :edit, :update, :destroy]
 
   def index
-    if params[:goal_id].present?
-      @goal = Goal.find_by_id(params["goal_id"])
-      @goal_types = @goal.goal_type
-    else
-      @goal_types = GoalType.all
-    end
+    @goal_types = GoalType.get_goal_types(params)
     render json: @goal_types
   end
 

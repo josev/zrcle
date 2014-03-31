@@ -2,11 +2,7 @@ class LevelsController < ApplicationController
 	before_action :set_level, only: [:show, :edit, :update, :destroy]
 
   def index
-    if params[:level_id].present?
-      @levels = Level.find_by_id(params[:level_id])
-    else
-      @levels = Level.all
-    end
+    @levels = Level.get_levels
     render json: @levels
   end
 

@@ -2,13 +2,7 @@ class UserConfigurationsController < ApplicationController
   before_action :set_user_configuration, only: [:show, :edit, :update, :destroy]
 
   def index
-    if params[:user_configuration_id].present?
-      @user_configurations = UserConfiguration.find_by_id(params[:user_configuration_id])
-    elsif params[:user_id].present?
-      @user_configurations = UserConfiguration.where(user_id: params[:user_id])
-    else
-      @user_configurations = UserConfiguration.all
-    end
+    @user_configurations = UserConfiguration.get_user_configurations(params)
     render json: @user_configurations
   end
 

@@ -2,13 +2,7 @@ class ProfilesController < ApplicationController
   before_action :set_profile, only: [:show, :edit, :update, :destroy]
 
   def index
-    if params[:profile_id].present?
-      @profiles = Profile.find_by_id(params[:profile_id])
-    elsif params[:user_id].present?
-      @profiles = Profile.where(user_id: params[:user_id])
-    else
-      @profiles = Profile.all
-    end
+    @profiles = Profile.get_profiles(params)
     render json: @profiles
   end
 

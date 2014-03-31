@@ -2,15 +2,7 @@ class GoalRemindsController < ApplicationController
   before_action :set_goal_remind, only: [:show, :edit, :update, :destroy]
 
   def index
-    if params[:user_id].present?
-      @goal_reminds = GoalRemind.where(user_id: params[:user_id])
-    elsif params[:goal_id].present?
-      @goal_reminds = GoalRemind.where(goal_id: params[:goal_id])
-    elsif params[:goal_remind_id].present?
-      @goal_reminds = GoalRemind.find_by_id(params[:goal_remind_id])
-    else
-      @goal_reminds = GoalRemind.all
-    end
+    @goal_reminds = GoalRemind.get_goal_reminds(params)
     render json: @goal_reminds
   end
 

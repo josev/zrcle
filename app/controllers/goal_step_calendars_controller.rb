@@ -2,15 +2,7 @@ class GoalStepCalendarsController < ApplicationController
   before_action :set_goal_step_calendar, only: [:show, :edit, :update, :destroy]
 
   def index
-    if params[:goal_id].present?
-      @goal_step_calendars = GoalStepCalendar.where(goal_id: params[:goal_id])
-    elsif params[:user_id].present?
-      @goal_step_calendars = GoalStepCalendar.where(user_id: params[:user_id])
-    elsif params[:goal_step_calendar_id].present?
-      @goal_step_calendars = GoalStepCalendar.find_by_id(params[:goal_step_calendar_id])
-    else
-      @goal_step_calendars = GoalStepCalendar.all
-    end
+    @goal_step_calendars = GoalStepCalendar.get_goal_step_calendars(params)
     render json: @goal_step_calendars
   end
 
