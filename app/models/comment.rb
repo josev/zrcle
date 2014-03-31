@@ -2,7 +2,7 @@ class Comment < ActiveRecord::Base
     validates :goal_id, :user_id, :comment, :date, presence: true
     belongs_to :goal
     belongs_to :user
-heroku
+    
     def self.get_comments(_params)
     if _params[:goal_id].present?
       comments = Comment.where(goal_id: _params[:goal_id])
