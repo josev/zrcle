@@ -30,6 +30,7 @@ Zrcle::Application.routes.draw do
   resources :friendships
   resources :goal_categories do
     resources :goals, only: [:index]
+  end
   resources :goal_rates
   resources :goal_reminds
   resources :goal_step_calendars
