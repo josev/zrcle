@@ -50,6 +50,6 @@ class GoalCategoriesController < ApplicationController
     end
 
     def goal_category_params
-      params.require(:goal_category).permit(:name)
+      params.require(:goal_category).permit(:name, :image)
     end
 end
