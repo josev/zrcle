@@ -2,15 +2,7 @@ class CommentsController < ApplicationController
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
 
   def index
-    if params[:goal_id].present?
-      @comments = Comment.where(goal_id: params[:goal_id])
-    elsif params[:user_id].present?
-      @comments = Comment.where(user_id: params[:user_id])
-    elsif params[:comment_id].present?
-      @comments = Comment.find_by_id(params[:comment_id])
-    else
-      @comments = Comment.all
-    end
+    @comments = Comment.get_comments(params)
     render json: @comments
   end
 

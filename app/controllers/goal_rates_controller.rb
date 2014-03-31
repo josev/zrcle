@@ -2,15 +2,7 @@ class GoalRatesController < ApplicationController
   before_action :set_goal_rate, only: [:show, :edit, :update, :destroy]
 
   def index
-    if params[:goal_id].present?
-      @goal_rates = GoalRate.where(goal_id: params[:goal_id])
-    elsif params[:user_id]
-      @goal_rates = GoalRate.where(user_id: params[:user_id])
-    elsif params[:goal_rate_id].present?
-      @goal_rates = GoalRate.find_by_id(params[:goal_rate_id])
-    else
-      @goal_rates = GoalRate.all
-    end
+    @goal_rates = GoalRate.get_goal_rates(params)
     render json: @goal_rates
   end
 

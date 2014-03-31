@@ -2,16 +2,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   def index
-    if params[:user_id].present?
-      @users = User.find_by_id(user_id: params[:user_id])
-    elsif params[:goal_id].present?
-      @user_goals = UserGoal.select("user_id AS id").where(goal_id: params[:goal_id])
-      if @user_goals.present?
-        @users = User.where(id: @user_goals)
-      end
-    else
-      @users = User.all
-    end
+    @users = User.get_users(params)
     render json: @users
   end
 

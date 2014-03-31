@@ -2,14 +2,7 @@ class GoalCategoriesController < ApplicationController
 	before_action :set_goal_category, only: [:show, :edit, :update, :destroy]
 
   def index
-    if params[:goal_category_id].present?
-      @goal_categories = GoalCategory.find_by_id(params[:goal_category_id])
-    elsif params[:goal_id].present?
-      @goal = Goal.find_by_id(params[:goal_id])
-      @goal_categories = @goal.goal_category
-    else
-      @goal_categories = GoalCategory.all
-    end
+    @goal_categories = GoalCategory.get_goal_categories(params)
     render json: @goal_categories
   end
 

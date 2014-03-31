@@ -1,28 +1,29 @@
 Zrcle::Application.routes.draw do
 
   resources :goals do
-    resources :goal_types, only: [:index, :show]
-    resources :user_goals, only: [:index, :show]
-    resources :goal_categories, only: [:index, :show]
-    resources :users, only: [:index, :show]
-    resources :goal_reminds, only: [:index, :show]
-    resources :goal_rates, only: [:index, :show]
-    resources :goal_step_calendars, only: [:index, :show]
-    resources :comments, only: [:index, :show]
+    resources :goal_types, only: [:index]
+    resources :user_goals, only: [:index]
+    resources :goal_categories, only: [:index]
+    resources :users, only: [:index]
+    resources :goal_reminds, only: [:index]
+    resources :goal_rates, only: [:index]
+    resources :goal_step_calendars, only: [:index]
+    resources :comments, only: [:index]
+    resources :follow_goals, only: [:index]
   end
   resources :users do
-    resources :user_goals, only: [:index, :show]
-    resources :goals, only: [:index, :show]
-    resources :user_configurations, only: [:index, :show]
-    resources :profiles, only: [:index, :show]
-    resources :follow_goals, only: [:index, :show]
-    resources :friendships, only: [:index, :show]
+    resources :user_goals, only: [:index]
+    resources :goals, only: [:index]
+    resources :user_configurations, only: [:index]
+    resources :profiles, only: [:index]
+    resources :follow_goals, only: [:index]
+    resources :friendships, only: [:index]
   end
   resources :comment_likes
   resources :comment_replies
   resources :comments do
-    resources :comment_replies, only: [:index, :show]
-    resources :comment_likes, only: [:index, :show]
+    resources :comment_replies, only: [:index]
+    resources :comment_likes, only: [:index]
   end
   resources :follow_goals
   resources :follow_users
@@ -37,8 +38,8 @@ Zrcle::Application.routes.draw do
   resources :profiles
   resources :user_configurations
   resources :user_goals do
-    resources :goals, only: [:index, :show]
-    resources :users, only: [:index, :show]
+    resources :goals, only: [:index]
+    resources :users, only: [:index]
   end
   resources :user_levels
 

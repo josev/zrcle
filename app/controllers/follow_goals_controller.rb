@@ -2,13 +2,7 @@ class FollowGoalsController < ApplicationController
   before_action :set_follow_goal, only: [:show, :edit, :update, :destroy]
 
   def index
-    if params[:follow_goal_id]
-      @follow_goals = FollowGoal.find_by_id(params[:follow_goal_id])
-    elsif params[:user_id]
-      @follow_goals = FollowGoal.where(user_id: params[:user_id])
-    else
-      @follow_goals = FollowGoal.all
-    end
+    @follow_goals = FollowGoal.get_follow_goals(params)
     render json: @follow_goals
   end
 

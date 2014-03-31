@@ -2,15 +2,7 @@ class FriendshipsController < ApplicationController
   before_action :set_frienship, only: [:show, :edit, :update, :destroy]
 
   def index
-    if params[:user_id].present?
-      @friendships = Friendship.where(user_id: params[:user_id])
-    elsif params[:friend_id].present?
-      @friendships = Friendship.where(friend_id: params[:friend_id])
-    elsif params[:friendship_id]
-      @friendships = Friendship.find_by_id(params[:friendship_id])
-    else
-      @friendships = Friendship.all
-    end
+    @friendships = Friendship.get_frienships(params)
     render json: @friendships
   end
 

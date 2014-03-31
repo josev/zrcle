@@ -2,15 +2,7 @@ class CommentRepliesController < ApplicationController
 	before_action :set_comment_reply, only: [:show, :edit, :update, :destroy]
 
   def index
-    if params[:comment_id].present?
-      @comment_replies = CommentReply.where(comment_id: params[:comment_id])
-    elsif params[:user_id].present?
-      @comment_replies = CommentReply.where(user_id: params[:user_id])
-    elsif params[:comment_reply_id].present?
-      @comment_replies = CommentReply.find_by_id(params[:comment_reply_id])
-    else
-      @comment_replies = CommentReply.all
-    end
+    @comment_replies = CommentReply.get_comment_replies(params)
     render json: @comment_replies
   end
 
