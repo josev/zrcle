@@ -50,6 +50,11 @@ class GoalsController < ApplicationController
     render json: @goals
   end
 
+  def search_by_category
+    @goals = Goal.search_by_category(search_params)
+    render json: @goals
+  end
+
   private
     def set_goal
       @goal = Goal.find_by_id(params[:id])

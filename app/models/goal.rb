@@ -29,4 +29,7 @@ class Goal < ActiveRecord::Base
   def self.search_by_name(text)
     Goal.where("name like '%#{text}%'")
   end
+  def self.search_by_category(text)
+    Goal.joins("left join goal_categories on goals.goal_category_id=goal_categories.id").where("goal_categories.name like '%#{text}%'")
+  end
 end
