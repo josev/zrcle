@@ -7,7 +7,7 @@ class GoalCategoriesController < ApplicationController
   end
 
   def show
-    render json: @goal_categories
+    render json: @goal_category
   end
 
   def new

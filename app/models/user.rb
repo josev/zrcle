@@ -26,4 +26,11 @@ class User < ActiveRecord::Base
     vars = Array({:login => login,:user => user})
   end
 
+  def self.get_user_random(goal_category_id)
+    goals = Goal.select("id").where(goal_category_id: goal_category_id)
+    user_goals = UserGoal.select("user_id").where(goal_id: goals).group("user_id")
+    r = user_goals.shuffle
+    user= User.where(id: r.first.user_id)
+  end
+
 end

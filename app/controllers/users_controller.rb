@@ -49,6 +49,11 @@ class UsersController < ApplicationController
     render json: @user
   end
 
+  def random_user
+    @user = User.get_user_random(random_params)
+    render json: @user
+  end
+
   private
     def set_user
       @user = User.find(params[:id])
@@ -57,7 +62,11 @@ class UsersController < ApplicationController
     def user_params
       params.require(:user).permit(:email, :provider, :password, :uid)
     end
-     def login_params
+
+    def login_params
       params.permit(:email, :password)
-     end
+    end
+    def random_params
+      params.require(:goal_category_id)
+    end
 end
