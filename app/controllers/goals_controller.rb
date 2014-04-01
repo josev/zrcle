@@ -45,6 +45,11 @@ class GoalsController < ApplicationController
     end
   end
 
+  def search_by_name
+    @goals = Goal.search_by_name(search_params)
+    render json: @goals
+  end
+
   private
     def set_goal
       @goal = Goal.find_by_id(params[:id])
@@ -52,5 +57,9 @@ class GoalsController < ApplicationController
 
     def goal_params
       params.require(:goal).permit(:name, :description, :image, :goal_category_id, :expected_result, :date, :goal_type_id)
+    end
+
+    def search_params
+      params.require(:text)
     end
 end

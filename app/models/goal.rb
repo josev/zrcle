@@ -25,4 +25,8 @@ class Goal < ActiveRecord::Base
       @goals = Goal.all
     end
   end
+
+  def self.search_by_name(text)
+    Goal.where("name like '%#{text}%'")
+  end
 end
