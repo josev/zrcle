@@ -19,4 +19,11 @@ class User < ActiveRecord::Base
       users = User.all
     end
   end
+
+  def self.login(_params)
+    user = User.where(email: _params[:email], password: _params[:password])
+    login = user.present?
+    vars = Array({:login => login,:user => user})
+  end
+
 end

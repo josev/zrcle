@@ -44,6 +44,11 @@ class UsersController < ApplicationController
     end
   end
 
+  def login
+    @user = User.login(login_params)
+    render json: @user
+  end
+
   private
     def set_user
       @user = User.find(params[:id])
@@ -52,4 +57,7 @@ class UsersController < ApplicationController
     def user_params
       params.require(:user).permit(:email, :provider, :password, :uid)
     end
+     def login_params
+      params.permit(:email, :password)
+     end
 end

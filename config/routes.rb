@@ -1,5 +1,10 @@
 Zrcle::Application.routes.draw do
 
+  match '/goals/:goal_id/users/:id', to: 'user_goals#create_by_goals',:via => [:post]
+  match '/users/:user_id/goals/:id', to: 'user_goals#create_by_users',:via => [:post]
+  get 'goals/search_by_name/:text', to: 'goals#search_by_name'
+  get 'users/login', to: 'users#login'
+  
   resources :goals do
     resources :goal_types, only: [:index]
     resources :user_goals, only: [:index]
@@ -45,9 +50,7 @@ Zrcle::Application.routes.draw do
   end
   resources :user_levels
 
-  match '/goals/:goal_id/users/:id', to: 'user_goals#create_by_goals',:via => [:post]
-  match '/users/:user_id/goals/:id', to: 'user_goals#create_by_users',:via => [:post]
-  get 'goals/search_by_name/:text', to: 'goals#search_by_name'
+
 
 
   # The priority is based upon order of creation: first created -> highest priority.
