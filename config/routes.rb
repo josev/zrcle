@@ -3,6 +3,7 @@ Zrcle::Application.routes.draw do
   match '/goals/:goal_id/users/:id', to: 'user_goals#create_by_goals',:via => [:post]
   match '/users/:user_id/goals/:id', to: 'user_goals#create_by_users',:via => [:post]
   get 'goals/search_by_name/:text', to: 'goals#search_by_name'
+  get 'goals/search_by_category/:text', to: 'goals#search_by_category'
   get 'users/login', to: 'users#login'
   get 'users/random', to: 'users#random_user'
 
