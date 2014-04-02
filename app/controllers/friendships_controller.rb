@@ -2,7 +2,7 @@ class FriendshipsController < ApplicationController
   before_action :set_frienship, only: [:show, :edit, :update, :destroy]
 
   def index
-    @friendships = Friendship.get_frienships(params)
+    @friendships = Friendship.get_friendships(params)
     render json: @friendships
   end
 

@@ -32,5 +32,4 @@ class User < ActiveRecord::Base
     r = user_goals.shuffle
     user= User.where(id: r.first.user_id)
   end
-
 end
