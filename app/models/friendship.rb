@@ -15,4 +15,21 @@ class Friendship < ActiveRecord::Base
       friendships = Friendship.all
     end
   end
+
+  def self.get_friends(user_id)
+    friends = Friendship.where("user_id = #{user_id} or friend_id = #{user_id}")
+    lst = Array.new
+    lst = friends.select("friend_id as id").where(user_id: user_id)
+    lst += friends.select("user_id as id").where(friend_id: user_id)
+    users = Profile.where(user_id: lst)
+  end
+
+  def self.get_friends_by_name(user_id,text)
+    friends = Friendship.where("user_id = #{user_id} or friend_id = #{user_id}")
+    lst = Array.new
+    lst = friends.select("friend_id as id").where(user_id: user_id)
+    lst += friends.select("user_id as id").where(friend_id: user_id)
+    users = Profile.where(user_id: lst).where("name like '%#{text}%'")
+  end
+
 end

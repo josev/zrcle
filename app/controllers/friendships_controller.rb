@@ -44,6 +44,16 @@ class FriendshipsController < ApplicationController
     end
   end
 
+  def get_friends
+    @friends = Friendship.get_friends(get_friends_params)
+    render json: @friends
+  end
+
+  def get_friends_by_name
+    @friends = Friendship.get_friends_by_name(get_friends_params,search_params)
+    render json: @friends
+  end
+
   private
     def set_friendship
       @friendship = Friendship.find_by_id(params[:id])
@@ -51,5 +61,13 @@ class FriendshipsController < ApplicationController
 
     def friendship_params
       params.require(:friendship).permit(:user_id, :friend_id, :status)
+    end
+
+    def get_friends_params
+      params.require(:user_id)
+    end
+
+    def search_params
+      params.require(:text)
     end
 end

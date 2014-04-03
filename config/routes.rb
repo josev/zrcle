@@ -6,6 +6,8 @@ Zrcle::Application.routes.draw do
   get 'goals/search_by_category/:text', to: 'goals#search_by_category'
   get 'users/login', to: 'users#login'
   get 'users/random', to: 'users#random_user'
+  get 'friendships/get_friends/:id', to: 'friendships#get_friends'
+  get 'friendships/get_friends_by_name/:text', to: 'friendships#get_friends_by_name'
 
   resources :goals do
     resources :goal_types, only: [:index]
