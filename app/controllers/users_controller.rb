@@ -7,6 +7,7 @@ class UsersController < ApplicationController
   end
 
   def show
+    @user = User.get_user(@user)
     render json: @user
   end
 
@@ -20,10 +21,13 @@ class UsersController < ApplicationController
   end
 
   def create
-    if User.save_user(user_params)
-      render json: @user
-    else
+    @user = User.new
+    @user = @user.save_user(user_params)
+    if @user.errors.present?
       render json: {errors: @user.errors}
+    else
+      @user = User.get_user(@user)
+      render json: @user
     end
   end
 

@@ -4,6 +4,9 @@ class User < ActiveRecord::Base
   has_many :user_goals
   has_one :user_configurations
   has_one :profile
+
+  accepts_nested_attributes_for :profile
+
   def self.goals
     UserGoal.where(user_id: self.id)
   end
@@ -34,15 +37,26 @@ class User < ActiveRecord::Base
     user= User.where(id: r.first.user_id)
   end
 
-  def self.save_user(_params)
-     u = User.new
-     u.attributes = _params.reject{|k,v| !u.attributes.keys.member?(k.to_s)}
-     u.image = nil
-     if u.save
+  def save_user(_params)
+    u = User.new
+    u.attributes = _params.reject{|k,v| !u.attributes.keys.member?(k.to_s)}
+    u.image = nil
+    if u.save
       p = Profile.new
       p.attributes = _params.reject{|k,v| !p.attributes.keys.member?(k.to_s)}
       p.user_id = u.id
-      p.save
-     end
+      p.date = Date.today
+      if !p.save
+        self.errors.add(:profile,p.errors)
+      end
+    else
+      self.errors.add(:user,u.errors)
+    end
+    u
+  end
+
+  def self.get_user(user)
+    u =User.joins("full outer join profiles on users.id = profiles.user_id").where("users.id=#{user.id}")
+    u.select("users.id, users.email, users.provider,users.password, users.image, users.uid, profiles.country, profiles.description")
   end
 end
