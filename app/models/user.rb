@@ -39,6 +39,17 @@ class User < ActiveRecord::Base
 
   def save_user(_params)
     u = User.new
+    if _params[:provider] == "facebook"
+      if _params[:uid] == nil || _params[:uid] == ""
+        u.errors.add(:uid,"Error uid can't be null or empty")
+        return u
+      else
+        if User.where(uid: _params[:uid]).present?
+          u.errors.add(:uid,"Error the uid already exists")
+          return u
+        end
+      end
+    end
     u.attributes = _params.reject{|k,v| !u.attributes.keys.member?(k.to_s)}
     u.image = nil
     if u.save
