@@ -43,7 +43,6 @@ class UsersController < ApplicationController
       render json: @user.errors
     end
   end
-
   def login
     @user = User.login(login_params)
     render json: @user

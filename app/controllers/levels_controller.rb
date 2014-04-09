@@ -2,7 +2,7 @@ class LevelsController < ApplicationController
 	before_action :set_level, only: [:show, :edit, :update, :destroy]
 
   def index
-    @levels = Level.get_levels
+    @levels = Level.get_levels(params)
     render json: @levels
   end
 
