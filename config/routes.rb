@@ -19,6 +19,7 @@ Zrcle::Application.routes.draw do
     resources :goal_steps, only: [:index]
     resources :comments, only: [:index]
     resources :follow_goals, only: [:index]
+    resources :user_steps, only: [:index]
   end
   resources :users do
     resources :user_goals, only: [:index]
@@ -27,6 +28,7 @@ Zrcle::Application.routes.draw do
     resources :profiles, only: [:index]
     resources :follow_goals, only: [:index]
     resources :friendships, only: [:index]
+    resources :user_steps, only: [:index]
   end
   resources :comment_likes
   resources :comment_replies
@@ -53,6 +55,7 @@ Zrcle::Application.routes.draw do
     resources :users, only: [:index]
   end
   resources :user_levels
+  resources :user_steps
 
 
 
