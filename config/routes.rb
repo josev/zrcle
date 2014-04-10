@@ -15,7 +15,7 @@ Zrcle::Application.routes.draw do
     resources :users, only: [:index]
     resources :goal_reminds, only: [:index]
     resources :goal_rates, only: [:index]
-    resources :goal_step_calendars, only: [:index]
+    resources :goal_steps, only: [:index]
     resources :comments, only: [:index]
     resources :follow_goals, only: [:index]
   end
@@ -41,7 +41,7 @@ Zrcle::Application.routes.draw do
   end
   resources :goal_rates
   resources :goal_reminds
-  resources :goal_step_calendars
+  resources :goal_steps
   resources :goal_types do
     resources :goals
   end
