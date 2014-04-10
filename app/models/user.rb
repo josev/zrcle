@@ -26,6 +26,7 @@ class User < ActiveRecord::Base
 
   def self.login(_params)
     user = User.where(email: _params[:email], password: _params[:password])
+    u = User.get_user(user[0]) if user.present?
     login = user.present?
     vars = Array({:login => login,:user => user})
   end

@@ -8,7 +8,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.get_user(@user)
-    render json: @user
+    render json: @user, except: :password
   end
 
   def new
@@ -67,7 +67,7 @@ class UsersController < ApplicationController
 
 
     def login_params
-      params.permit(:email, :password)
+      params.permit(:email, :password, :provider)
     end
     def random_params
       params.require(:goal_category_id)
