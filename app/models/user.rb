@@ -30,13 +30,19 @@ class User < ActiveRecord::Base
       if user.present?
         user.oauth_token = _params[:oauth_token]
         user.uid = _params[:uid]
-        user.save
       end
     else
       user = User.where(email: _params[:email], password: _params[:password]).first
     end
-    login = user.present?
-    vars = Array({:login => login,:user => user})
+    if user.present?
+      user.provider=_params[:provider]
+      user.save
+      login = true
+      Array({:login => login,:user => user,:errors => user.errors})
+    else
+      login= false
+      Array({:login => login,:user => user})
+    end
   end
 
   def self.get_user_random(goal_category_id)

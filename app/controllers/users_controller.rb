@@ -67,7 +67,7 @@ class UsersController < ApplicationController
 
 
     def login_params
-      params.permit(:email, :password, :provider, :oauth_token, :uid)
+      params.require(:login).permit(:email, :password, :provider, :oauth_token, :uid)
     end
     def random_params
       params.require(:goal_category_id)
