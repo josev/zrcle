@@ -25,8 +25,16 @@ class User < ActiveRecord::Base
   end
 
   def self.login(_params)
-    user = User.where(email: _params[:email], password: _params[:password])
-    u = User.get_user(user[0]) if user.present?
+    if _params[:provider]=='facebook'
+      user = User.where(email: _params[:email]).first
+      if user.present?
+        user.oauth_token = _params[:oauth_token]
+        user.uid = _params[:uid]
+        user.save
+      end
+    else
+      user = User.where(email: _params[:email], password: _params[:password]).first
+    end
     login = user.present?
     vars = Array({:login => login,:user => user})
   end
