@@ -21,7 +21,6 @@ class GoalStepsController < ApplicationController
 
   def create
     @goal_step=GoalStep.new(goal_step_params)
-    @goal_step.date = Date.today
     if @goal_step.save
       render json: @goal_step
     else
