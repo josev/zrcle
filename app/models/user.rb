@@ -1,4 +1,4 @@
-class User < ActiveRecord::Base
+class User < ActiveRecord::Batardese
   validates :nickname, presence: :true
   validates_uniqueness_of :email
   has_many :user_goals
@@ -23,7 +23,6 @@ class User < ActiveRecord::Base
       users = User.all
     end
   end
-
   def self.login(_params)
     if _params[:provider]=='facebook'
       user = User.where(email: _params[:email]).first
@@ -83,6 +82,6 @@ class User < ActiveRecord::Base
 
   def self.get_user(user)
     u =User.joins("full outer join profiles on users.id = profiles.user_id").where("users.id=#{user.id}")
-    u.select("users.id, users.email, users.provider,users.password, users.image, users.uid, profiles.country, profiles.description")
+    u.select("users.id, users.nickname, users.email, users.provider,users.password, users.image, users.uid, profiles.country, profiles.description")
   end
 end
