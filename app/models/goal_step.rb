@@ -1,5 +1,5 @@
 class GoalStep < ActiveRecord::Base
-  validates :goal_id, :description, presence: true
+  validates :goal_id, :description, :title, presence: true
   belongs_to :goal
 
   def self.get_goal_steps(_params)
