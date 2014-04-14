@@ -104,6 +104,7 @@ ActiveRecord::Schema.define(version: 20140414161533) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "title"
+    t.integer  "order"
   end
 
   create_table "goal_types", force: true do |t|
