@@ -1,4 +1,4 @@
-class User < ActiveRecord::Batardese
+class User < ActiveRecord::Base
   validates :nickname, presence: :true
   validates_uniqueness_of :email
   has_many :user_goals
