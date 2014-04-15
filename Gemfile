@@ -12,7 +12,7 @@ gem 'rails_12factor', group: :production
 
 gem 'unicorn'
 
-
+gem 'active_model_serializers'
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
