@@ -6,13 +6,13 @@ class Friendship < ActiveRecord::Base
 
   def self.get_friendships(_params)
     if _params[:user_id].present?
-      friendships = Friendship.where(user_id: _params[:user_id])
+      Friendship.where(user_id: _params[:user_id])
     elsif _params[:friend_id].present?
-      friendships = Friendship.where(friend_id: _params[:friend_id])
+      Friendship.where(friend_id: _params[:friend_id])
     elsif _params[:friendship_id]
-      friendships = Friendship.find_by_id(_params[:friendship_id])
+      Friendship.find_by_id(_params[:friendship_id])
     else
-      friendships = Friendship.all
+      Friendship.all
     end
   end
 

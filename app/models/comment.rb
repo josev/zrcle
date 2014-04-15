@@ -5,13 +5,13 @@ class Comment < ActiveRecord::Base
     
     def self.get_comments(_params)
     if _params[:goal_id].present?
-      comments = Comment.where(goal_id: _params[:goal_id])
+      Comment.where(goal_id: _params[:goal_id])
     elsif _params[:user_id].present?
-      comments = Comment.where(user_id: _params[:user_id])
+      Comment.where(user_id: _params[:user_id])
     elsif _params[:comment_id].present?
-      comments = Comment.find_by_id(_params[:comment_id])
+      Comment.find_by_id(_params[:comment_id])
     else
-      comments = Comment.all
+      Comment.all
     end
   end
 end

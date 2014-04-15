@@ -3,11 +3,11 @@ class UserConfiguration < ActiveRecord::Base
 
   def self.get_user_configurations(_params)
     if _params[:user_configuration_id].present?
-      user_configurations = UserConfiguration.find_by_id(_params[:user_configuration_id])
+      UserConfiguration.find_by_id(_params[:user_configuration_id])
     elsif _params[:user_id].present?
-      user_configurations = UserConfiguration.where(user_id: _params[:user_id])
+      UserConfiguration.where(user_id: _params[:user_id])
     else
-      user_configurations = UserConfiguration.all
+      UserConfiguration.all
     end
   end
 end
