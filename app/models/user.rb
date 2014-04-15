@@ -36,12 +36,8 @@ class User < ActiveRecord::Base
     if user.present?
       user.provider=_params[:provider]
       user.save
-      login = true
-      Array({:login => login,:user => user,:errors => user.errors})
-    else
-      login= false
-      Array({:login => login,:user => user})
     end
+    user
   end
 
   def self.get_user_random(goal_category_id)
@@ -78,10 +74,5 @@ class User < ActiveRecord::Base
       self.errors.add(:user,u.errors)
     end
     u
-  end
-
-  def self.get_user(user)
-    u =User.joins("full outer join profiles on users.id = profiles.user_id").where("users.id=#{user.id}")
-    u.select("users.id, users.nickname, users.email, users.provider,users.password, users.image, users.uid, profiles.country, profiles.description")
   end
 end

@@ -7,7 +7,6 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.get_user(@user)
     render json: @user, except: :password
   end
 
@@ -26,7 +25,6 @@ class UsersController < ApplicationController
     if @user.errors.present?
       render json: {errors: @user.errors}
     else
-      @user = User.get_user(@user)
       render json: @user
     end
   end
