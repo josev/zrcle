@@ -75,4 +75,21 @@ class User < ActiveRecord::Base
     end
     u
   end
+
+  def following_me
+    FollowUser.where(follow_user_id: self.id)
+  end
+
+  def profile
+    Profile.where(user_id: self.id).first
+  end
+
+  def friends
+    f = Friendship.where(user_id: self.id)
+    f += Friendship.where(friend_id: self.id)
+  end
+
+  def goals
+    UserGoal.where(user_id: self.id)
+  end
 end

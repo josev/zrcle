@@ -13,16 +13,16 @@ class Goal < ActiveRecord::Base
 
   def self.get_goals(_params)
     if _params[:goal_type_id].present?
-      goals = Goal.where(goal_type_id: _params[:goal_type_id])
+      Goal.where(goal_type_id: _params[:goal_type_id])
     elsif _params[:goal_category_id].present?
-      goals = Goal.where(goal_category_id: _params[:goal_category_id])
+      Goal.where(goal_category_id: _params[:goal_category_id])
     elsif _params[:user_id].present?
       user_goals = UserGoal.select("goal_id AS id").where(user_id: _params[:user_id])
       if user_goals.present?
-        goals = Goal.where(id: user_goals)
+        Goal.where(id: user_goals)
       end
     else
-      @goals = Goal.all
+      Goal.all
     end
   end
 
