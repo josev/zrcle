@@ -27,6 +27,7 @@ Zrcle::Application.routes.draw do
     resources :user_configurations, only: [:index]
     resources :profiles, only: [:index]
     resources :follow_goals, only: [:index]
+    resources :follow_users, only: [:index]
     resources :friendships, only: [:index]
     resources :user_steps, only: [:index]
   end
