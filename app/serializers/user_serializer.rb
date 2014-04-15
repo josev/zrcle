@@ -1,8 +1,38 @@
 class UserSerializer < ActiveModel::Serializer
   attributes :id, :nickname, :email, :password, :provider, :uid, :oauth_token, :image,
-  :profile
+  :country, :description, :follows, :friends, :finishied_goals, :goals
 
-  def profile
-  	Profile.select("id, country, description").where(user_id: object.id).first
+  #has_one :profile
+
+  def country
+  	if object.profile.present?
+  		object.profile.country
+  	else
+  		nil
+  	end
+  end
+
+  def description
+  	if object.profile.present?
+  		object.profile.description
+  	else
+  		nil
+  	end
+  end
+
+  def follows
+  	object.following_me.count
+  end
+
+  def friends
+  	object.friends.count
+  end
+
+  def finishied_goals
+  	object.goals.count
+  end
+
+  def goals
+  	object.goals.count
   end
 end
