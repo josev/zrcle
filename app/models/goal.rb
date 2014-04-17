@@ -1,15 +1,19 @@
 class Goal < ActiveRecord::Base
     validates :name, :description, :goal_category_id, :expected_result, :date, :goal_type_id, presence: true
-    has_many :user
     belongs_to :goal_category
     belongs_to :goal_type
-
+    has_many :users, through: :user_goals
+    has_many :user_goals
     #after_create :create_usergoal
 
     #private
     #   def create_usergoal
     #       ug = UserGoal.create(user_id: self.user_id, goal_id: self.id, state: "0")
     #   end
+
+  def default_serializer_options
+    { user_id: user_id }.merge(super)
+  end
 
   def self.get_goals(_params)
     if _params[:goal_type_id].present?

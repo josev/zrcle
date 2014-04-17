@@ -1,9 +1,9 @@
 class User < ActiveRecord::Base
   validates :nickname, presence: :true
   validates_uniqueness_of :email
-  has_many :user_goals
   has_one :user_configurations
   has_one :profile
+  has_many :goals, through: :user_goals
 
   accepts_nested_attributes_for :profile
 
@@ -85,8 +85,11 @@ class User < ActiveRecord::Base
   end
 
   def friends
-    f = Friendship.where(user_id: self.id)
-    f += Friendship.where(friend_id: self.id)
+    friends = Friendship.where("user_id = #{self.id} or friend_id = #{self.id}")
+    lst = Array.new
+    lst = friends.select("friend_id as id").where(user_id: self.id)
+    lst += friends.select("user_id as id").where(friend_id: self.id)
+    users = User.where(id: lst)
   end
 
   def goals

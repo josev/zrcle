@@ -21,7 +21,7 @@ class Friendship < ActiveRecord::Base
     lst = Array.new
     lst = friends.select("friend_id as id").where(user_id: user_id)
     lst += friends.select("user_id as id").where(friend_id: user_id)
-    users = Profile.where(user_id: lst)
+    users = User.where(id: lst)
   end
 
   def self.get_friends_by_name(user_id,text)
@@ -29,7 +29,7 @@ class Friendship < ActiveRecord::Base
     lst = Array.new
     lst = friends.select("friend_id as id").where(user_id: user_id)
     lst += friends.select("user_id as id").where(friend_id: user_id)
-    users = Profile.where(user_id: lst).where("name like '%#{text}%'")
+    users = User.where(id: lst).where("name like '%#{text}%'")
   end
 
 end

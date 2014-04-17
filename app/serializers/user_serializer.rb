@@ -2,7 +2,7 @@ class UserSerializer < ActiveModel::Serializer
   attributes :id, :nickname, :email, :password, :provider, :uid, :oauth_token, :image,
   :country, :description, :follows, :friends, :finishied_goals, :goals
 
-  #has_one :profile
+  has_many :goals, through: :user_goals
 
   def country
   	if object.profile.present?
@@ -32,7 +32,7 @@ class UserSerializer < ActiveModel::Serializer
   	object.goals.count
   end
 
-  def goals
-  	object.goals.count
-  end
+  #def goals
+  #	object.goals.count
+  #end
 end

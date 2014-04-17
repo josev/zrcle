@@ -10,6 +10,11 @@ class GoalsController < ApplicationController
     render json: @goal
   end
 
+  def default_serializer_options
+    user_id= params[:user_id] if params[:user_id].present?  
+    {user_id: user_id}  
+  end  
+
   def new
     @goal= Goal.new
     render json: @goal
