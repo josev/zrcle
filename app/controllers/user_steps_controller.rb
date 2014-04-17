@@ -3,7 +3,7 @@ class UserStepsController < ApplicationController
 
   def index
     @user_steps = UserStep.get_user_steps(params)
-    render json: @user_steps
+    render json: @user_steps, root: false
   end
 
   def show

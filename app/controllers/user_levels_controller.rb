@@ -3,7 +3,7 @@ class UserLevelsController < ApplicationController
 
   def index
     @user_levels = UserLevel.get_user_levels(params)
-    render json: @user_levels
+    render json: @user_levels, root: false
   end
 
   def show

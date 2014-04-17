@@ -3,7 +3,7 @@ class CommentLikesController < ApplicationController
 
   def index
     @comment_likes = CommentLike.get_comment_likes(params)
-    render json: @comment_likes
+    render json: @comment_likes, root: false
   end
 
   def show

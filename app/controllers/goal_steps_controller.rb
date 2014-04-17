@@ -3,7 +3,7 @@ class GoalStepsController < ApplicationController
 
   def index
     @goal_steps = GoalStep.get_goal_steps(params)
-    render json: @goal_steps
+    render json: @goal_steps, root: false
   end
 
   def show

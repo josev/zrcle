@@ -3,7 +3,7 @@ class LevelsController < ApplicationController
 
   def index
     @levels = Level.get_levels(params)
-    render json: @levels
+    render json: @levels, root: false
   end
 
   def show

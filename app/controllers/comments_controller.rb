@@ -3,7 +3,7 @@ class CommentsController < ApplicationController
 
   def index
     @comments = Comment.get_comments(params)
-    render json: @comments
+    render json: @comments, root: false
   end
 
   def show

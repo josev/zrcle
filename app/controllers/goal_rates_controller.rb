@@ -3,7 +3,7 @@ class GoalRatesController < ApplicationController
 
   def index
     @goal_rates = GoalRate.get_goal_rates(params)
-    render json: @goal_rates
+    render json: @goal_rates, root: false
   end
 
   def show

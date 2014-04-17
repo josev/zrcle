@@ -3,7 +3,7 @@ class ProfilesController < ApplicationController
 
   def index
     @profiles = Profile.get_profiles(params)
-    render json: @profiles
+    render json: @profiles, root: false
   end
 
   def show

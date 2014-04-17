@@ -3,7 +3,7 @@ class UserGoalsController < ApplicationController
 
   def index
     @user_goals = UserGoal.get_user_goals(params)
-    render json: @user_goals
+    render json: @user_goals, root: false
   end
 
   def show

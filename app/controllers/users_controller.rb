@@ -3,7 +3,7 @@ class UsersController < ApplicationController
 
   def index
     @users = User.get_users(params)
-    render json: @users
+    render json: @users, root: false
   end
 
   def show

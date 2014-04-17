@@ -3,7 +3,7 @@ class FollowUsersController < ApplicationController
 
   def index
     @follow_users = FollowUser.get_follow_users(params)
-    render json: @follow_users
+    render json: @follow_users, root: false
   end
 
   def show

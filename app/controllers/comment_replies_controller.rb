@@ -3,7 +3,7 @@ class CommentRepliesController < ApplicationController
 
   def index
     @comment_replies = CommentReply.get_comment_replies(params)
-    render json: @comment_replies
+    render json: @comment_replies, root: false
   end
 
   def show
