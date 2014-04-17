@@ -14,7 +14,7 @@ class GoalSerializer < ActiveModel::Serializer
       u.friends
       UserGoal.where(goal_id: object.id, user_id: u.friends).count
     else
-      nil
+      0
     end
   end
 
