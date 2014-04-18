@@ -52,7 +52,7 @@ class GoalsController < ApplicationController
 
   def search_by_name
     @goals = Goal.search_by_name(search_params)
-    render json: @goals
+    render json: @goals, root: false
   end
 
   def search_by_category

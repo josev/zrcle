@@ -17,5 +17,4 @@ class GoalSerializer < ActiveModel::Serializer
       0
     end
   end
-
 end

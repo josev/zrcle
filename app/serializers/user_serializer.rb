@@ -1,6 +1,6 @@
 class UserSerializer < ActiveModel::Serializer
   attributes :id, :nickname, :email, :password, :provider, :uid, :oauth_token, :image,
-  :country, :description, :follows, :friends, :finishied_goals, :goals
+  :country, :description, :follows, :friends, :finishied_goals, :goals, :goals_ids
 
   #has_many :goals, through: :user_goals
 
@@ -34,5 +34,13 @@ class UserSerializer < ActiveModel::Serializer
 
   def goals
   	object.goals.count
+  end
+
+  def goals_ids
+    id = Array.new
+    object.goals.each do |g|
+      id.push(g.id)
+    end
+    id
   end
 end
