@@ -23,40 +23,40 @@ Zrcle::Application.routes.draw do
   end
   resources :users do
     resources :user_goals, only: [:index]
-    resources :goals, only: [:index]
+    resources :goals, only: [:index, :show]
     resources :user_configurations, only: [:index]
-    resources :profiles, only: [:index]
+    #resources :profiles, only: [:index]
     resources :follow_goals, only: [:index]
     resources :follow_users, only: [:index]
     resources :friendships, only: [:index]
     resources :user_steps, only: [:index]
   end
-  resources :comment_likes
-  resources :comment_replies
+  #resources :comment_likes
+  #resources :comment_replies
   resources :comments do
     resources :comment_replies, only: [:index]
     resources :comment_likes, only: [:index]
   end
   resources :follow_goals
   resources :follow_users
-  resources :friendships
+  #resources :friendships
   resources :goal_categories do
     resources :goals, only: [:index]
   end
-  resources :goal_rates
-  resources :goal_reminds
-  resources :goal_steps
+  #resources :goal_rates
+  #resources :goal_reminds
+  #resources :goal_steps
   resources :goal_types do
     resources :goals
   end
-  resources :profiles
-  resources :user_configurations
+  #resources :profiles
+  #resources :user_configurations
   resources :user_goals do
     resources :goals, only: [:index]
     resources :users, only: [:index]
   end
-  resources :user_levels
-  resources :user_steps
+  #resources :user_levels
+  #resources :user_steps
 
 
 
