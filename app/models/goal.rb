@@ -36,4 +36,16 @@ class Goal < ActiveRecord::Base
   def self.search_by_category(text)
     Goal.joins("left join goal_categories on goals.goal_category_id=goal_categories.id").where("goal_categories.name like '%#{text}%'")
   end
+
+  def steps
+    GoalStep.where(goal_id: self.id)
+  end
+
+  def completes(user_id)
+    UserStep.where(user_id: user_id, goal_step_id: steps, status: 3)
+  end
+
+  def current_step(user_id)
+    UserStep.select("goal_steps.order").joins("full outer join goal_steps on user_steps.goal_step_id = goal_steps.id").where(user_id: user_id, goal_step_id: steps, status: 2).first
+  end
 end
