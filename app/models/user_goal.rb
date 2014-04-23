@@ -14,4 +14,17 @@ class UserGoal < ActiveRecord::Base
       UserGoal.all
     end
   end
+
+  def start_goal
+    g = Goal.find_by_id(self.goal_id)
+    u = User.find_by_id(self.user_id)
+    g.steps.each do |step|
+      user_step = UserStep.new
+      user_step.user_id = self.user_id
+      user_step.status = step.order == 1 ? 2 : 1
+      user_step.goal_step_id = step.id
+      user_step.save
+    end
+  end
+
 end

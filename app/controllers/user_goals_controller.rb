@@ -22,6 +22,7 @@ class UserGoalsController < ApplicationController
   def create
     @user_goal=UserGoal.new(user_goal_params)
     if @user_goal.save
+      @user_goal.start_goal
       render json: @user_goal
     else
       render json: {errors: @user_goal.errors}
@@ -34,6 +35,7 @@ class UserGoalsController < ApplicationController
     @user_goal.goal_id = params[:goal_id]
     @user_goal.state = "1"
     if @user_goal.save
+      @user_goal.start_goal
       render json: @user_goal
     else
       render json: {errors: @user_goal.errors}
@@ -46,6 +48,7 @@ class UserGoalsController < ApplicationController
     @user_goal.goal_id = params[:id]
     @user_goal.state = "1"
     if @user_goal.save
+      @user_goal.start_goal
       render json: @user_goal
     else
       render json: {errors: @user_goal.errors}

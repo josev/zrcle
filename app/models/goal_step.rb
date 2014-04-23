@@ -1,6 +1,7 @@
 class GoalStep < ActiveRecord::Base
   validates :goal_id, :description, :title, :order, presence: true
   belongs_to :goal
+  has_many :user_step
 
   def self.get_goal_steps(_params)
     if _params[:goal_id].present?

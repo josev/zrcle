@@ -1,6 +1,6 @@
 class UserStep < ActiveRecord::Base
   validates :user_id, :goal_step_id, :status, presence: :true
-  has_one :goal_step
+  belongs_to :goal_step
 
   def self.get_user_steps(_params)
     if _params[:goal_id].present?

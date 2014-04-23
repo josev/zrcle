@@ -7,11 +7,12 @@ Zrcle::Application.routes.draw do
   get 'users/random', to: 'users#random_user'
   get 'friendships/get_friends/:user_id', to: 'friendships#get_friends'
   get 'friendships/get_friends_by_name/:text', to: 'friendships#get_friends_by_name'
+  #get 'users/:user_id/goals/:goal_id/user_steps'
   post 'users/login', to: 'users#login'
 
   resources :goals do
     resources :goal_types, only: [:index]
-    resources :user_goals, only: [:index]
+    resources :user_goals, only: [:index, :delete]
     resources :goal_categories, only: [:index]
     resources :users, only: [:index]
     resources :goal_reminds, only: [:index]
@@ -22,14 +23,14 @@ Zrcle::Application.routes.draw do
     resources :user_steps, only: [:index]
   end
   resources :users do
-    resources :user_goals, only: [:index]
+    resources :user_goals, only: [:index, :destroy]
     resources :goals, only: [:index, :show]
     resources :user_configurations, only: [:index]
     #resources :profiles, only: [:index]
     resources :follow_goals, only: [:index]
     resources :follow_users, only: [:index]
     resources :friendships, only: [:index]
-    resources :user_steps, only: [:index]
+    resources :user_steps, only: [:index, :delete]
   end
   #resources :comment_likes
   #resources :comment_replies
