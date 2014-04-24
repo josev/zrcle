@@ -1,13 +1,13 @@
 Zrcle::Application.routes.draw do
-  match '/goals/:goal_id/users/:id', to: 'user_goals#create_by_goals',:via => [:post]
-  match '/users/:user_id/goals/:id', to: 'user_goals#create_by_users',:via => [:post]
+  match '/goals/:goal_id/users/:id', to: 'user_goals#create_by_goals', via: [:post]
+  match '/users/:user_id/goals/:id', to: 'user_goals#create_by_users', via: [:post]
+  match 'users/:user_id/goals/:goal_id/current_step', to: 'user_steps#current_step', via: [:get]
   get 'goals/search_by_name/:text', to: 'goals#search_by_name'
   get 'goals/search_by_category/:text', to: 'goals#search_by_category'
   get 'users/login', to: 'users#login'
   get 'users/random', to: 'users#random_user'
   get 'friendships/get_friends/:user_id', to: 'friendships#get_friends'
   get 'friendships/get_friends_by_name/:text', to: 'friendships#get_friends_by_name'
-  #get 'users/:user_id/goals/:goal_id/user_steps'
   post 'users/login', to: 'users#login'
 
   resources :goals do

@@ -13,4 +13,9 @@ class UserStep < ActiveRecord::Base
       UserStep.all
     end
   end
+
+  def self.current_step(_params)
+    g = Goal.find_by_id(_params[:goal_id])
+    g.current_step(_params[:user_id]).present? ? g.current_step(_params[:user_id]) : nil
+  end
 end
