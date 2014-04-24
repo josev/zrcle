@@ -42,7 +42,7 @@ class GoalSerializer < ActiveModel::Serializer
   def current_step
     u = User.find_by_id(options[:user_id])
     if u.present?
-      object.current_step(u.id).order
+      object.current_step(u.id).present? ? object.current_step(u.id).order : "nothing"
     else
       nil
     end
