@@ -58,7 +58,7 @@ Zrcle::Application.routes.draw do
     resources :users, only: [:index]
   end
   #resources :user_levels
-  resources :user_steps
+  #resources :user_steps
 
 
 

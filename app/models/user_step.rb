@@ -38,7 +38,7 @@ class UserStep < ActiveRecord::Base
       else
         if current.goal_step.goal.steps.count == current.goal_step.goal.step_completes(_params[:user_id]).count
           user_goal = UserGoal.where(user_id: current.user_id, goal_id: current.goal_step.goal_id).first
-          user_goal.state = 3
+          user_goal.state = 2
           if user_goal.save
             nil
           else
