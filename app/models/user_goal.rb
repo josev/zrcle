@@ -1,5 +1,6 @@
 class UserGoal < ActiveRecord::Base
   validates :user_id, :goal_id, :state, presence: true
+  validate :exist
   belongs_to :user
   belongs_to :goal
 
@@ -26,5 +27,10 @@ class UserGoal < ActiveRecord::Base
       user_step.save
     end
   end
-
+  protected
+    def exist
+      if UserGoal.where(user_id: self.user_id, goal_id: self.goal_id).present?
+        errors.add(:goal, 'you are already in this goal')
+      end
+    end
 end

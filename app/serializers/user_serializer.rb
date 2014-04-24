@@ -39,7 +39,7 @@ class UserSerializer < ActiveModel::Serializer
   def goals_ids
     id = Array.new
     object.goals.each do |g|
-      id.push(g.id)
+      id.push(g.goal.id)
     end
     id
   end
