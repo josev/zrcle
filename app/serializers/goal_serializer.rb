@@ -53,11 +53,15 @@ class GoalSerializer < ActiveModel::Serializer
   end
   def state
     u = User.find_by_id(options[:user_id])
-    g = u.goals.where(goal_id: object.id).first
-    if g.present?
-      g.state
+    if u.present?
+      g = u.goals.where(goal_id: object.id).first
+      if g.present?
+        g.state
+      else
+        "unknown"
+      end
     else
-      "unknown"
+      nil
     end
   end
 end
