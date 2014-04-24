@@ -41,11 +41,12 @@ class Goal < ActiveRecord::Base
     GoalStep.where(goal_id: self.id)
   end
 
-  def completes(user_id)
+  def step_completes(user_id)
     UserStep.where(user_id: user_id, goal_step_id: steps, status: 3)
   end
 
   def current_step(user_id)
-    UserStep.select("user_steps.*,goal_steps.*").joins("full outer join goal_steps on user_steps.goal_step_id = goal_steps.id").where(user_id: user_id, goal_step_id: steps, status: 2).first
+    UserStep.where(user_id: user_id, goal_step_id: steps, status: 2).first
   end
+
 end

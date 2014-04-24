@@ -1,6 +1,6 @@
 class GoalSerializer < ActiveModel::Serializer
   attributes :id, :name, :description, :image, :goal_category_id, :expected_result, :goal_type_id, 
-  :users, :friends, :progress, :current_step
+  :users, :friends, :progress, :current_step, :state
 
   #has_many :users, through: :user_goals
 
@@ -26,11 +26,7 @@ class GoalSerializer < ActiveModel::Serializer
   def progress
     u = User.find_by_id(options[:user_id])
     if u.present?
-      if object.steps.present? && object.completes(u.id).present?
-        object.completes.count/object.steps.count
-      else
-        0
-      end
+      object.step_completes(u.id).count
     else
       nil
     end
@@ -42,9 +38,22 @@ class GoalSerializer < ActiveModel::Serializer
   def current_step
     u = User.find_by_id(options[:user_id])
     if u.present?
-      object.current_step(u.id).present? ? object.current_step(u.id).order : "nothing"
+      object.current_step(u.id).present? ? object.current_step(u.id).goal_step.order : "nothing"
     else
       nil
+    end
+  end
+
+  def include_state?
+    state
+  end
+  def state
+    u = User.find_by_id(options[:user_id])
+    g = u.goals.where(goal_id: object.id).first
+    if g.present?
+      g.state
+    else
+      "unknown"
     end
   end
 end

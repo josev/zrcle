@@ -50,13 +50,25 @@ class UserStepsController < ApplicationController
     render json: @user_step
   end
 
+  def step_complete
+    @next_step = UserStep.step_complete(current_step_params)
+    if @next_step.present?
+      if @next_step.errors.present?
+        render json: {errors: @next_step.errors}
+      else
+        render json: @next_step
+      end
+    else
+      render json: @next_step
+    end
+  end
   private
     def set_user_step
       @user_step = UserStep.find(params[:id])
     end
 
     def user_step_params
-      params.require(:user_step).permit(:user_id, :goal_step_id)
+      params.require(:user_step).permit(:user_id, :goal_step_id, :status)
     end
 
     def current_step_params
