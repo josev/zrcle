@@ -48,7 +48,7 @@ Zrcle::Application.routes.draw do
   end
   #resources :goal_rates
   #resources :goal_reminds
-  #resources :goal_steps
+  resources :goal_steps
   resources :goal_types do
     resources :goals
   end
