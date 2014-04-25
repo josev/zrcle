@@ -10,6 +10,7 @@ Zrcle::Application.routes.draw do
   get 'friendships/get_friends_by_name/:text', to: 'friendships#get_friends_by_name'
   post 'users/login', to: 'users#login'
   post 'users/:user_id/goals/:goal_id/step_complete', to: 'user_steps#step_complete'
+  patch 'goals/:id/goal_image', to: 'goals#goal_image'
 
   resources :goals do
     resources :goal_types, only: [:index]
@@ -58,7 +59,7 @@ Zrcle::Application.routes.draw do
     resources :users, only: [:index]
   end
   #resources :user_levels
-  #resources :user_steps
+  resources :user_steps
 
 
 
