@@ -53,7 +53,7 @@ class UsersController < ApplicationController
     @user = User.get_user_random(random_params)
     render json: @user
   end
-
+  
   private
     def set_user
       @user = User.find(params[:id])

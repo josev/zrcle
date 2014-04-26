@@ -63,16 +63,16 @@ class GoalsController < ApplicationController
   def goal_image
     uploaded_io = upload_params
     if uploaded_io!=nil
-      puts("=======found one image")
-      if File.exist?("public/images/goals/#{@goal.id}-#{@goal.name}.jpg")
-        File.delete("public/images/goals/#{@goal.id}-#{@goal.name}.jpg")
+      tmp_string = "#{@goal.id}-#{@goal.name}"
+      if File.exist?("public/images/goals/#{tmp_string}.jpg")
+        File.delete("public/images/goals/#{tmp_string}.jpg")
       end
-      File.open(Rails.root.join('public/images/', 'goals', "#{@goal.id}-#{@goal.name}.jpg"), 'wb') do |file|
+      File.open(Rails.root.join('public/images/', 'goals', "#{tmp_string}.jpg"), 'wb') do |file|
         file.write(uploaded_io.read)
       end
-      @goal.image = "http://zircle.herokuapp.com/images/goals/#{@goal.id}-#{@goal.name}.jpg"
+      @goal.image = "http://zircle.herokuapp.com/images/goals/#{tmp_string}.jpg"
       if @goal.save
-        render json: {text: "Success"}
+        render json: {url: @goal.image}
       else
         render json: {errors: @goal.errors}
       end

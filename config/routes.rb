@@ -11,6 +11,7 @@ Zrcle::Application.routes.draw do
   post 'users/login', to: 'users#login'
   post 'users/:user_id/goals/:goal_id/step_complete', to: 'user_steps#step_complete'
   patch 'goals/:id/goal_image', to: 'goals#goal_image'
+  patch 'goal_categories/:id/category_image', to: 'goal_categories#category_image'
 
   resources :goals do
     resources :goal_types, only: [:index]
