@@ -1,6 +1,6 @@
 class GoalSerializer < ActiveModel::Serializer
-  attributes :id, :name, :description, :image, :goal_category_id, :expected_result, :goal_type_id, 
-  :state,:users, :friends, :progress, :current_step, :steps
+  attributes :id, :name, :description, :goal_category_id, :expected_result, :goal_type_id, 
+  :state,:users, :friends, :progress, :current_step, :steps, :image
 
   #has_many :users, through: :user_goals
 
@@ -62,6 +62,12 @@ class GoalSerializer < ActiveModel::Serializer
       end
     else
       nil
+    end
+  end
+
+  def image
+    if object.image_url.present?
+      object.image_url
     end
   end
 end

@@ -45,23 +45,11 @@ class GoalCategoriesController < ApplicationController
   end
 
   def category_image
-    uploaded_io = upload_params
-    if uploaded_io!=nil
-      tmp_string = "#{@goal_category.id}-#{@goal_category.name}"
-      if File.exist?("public/images/categories/#{tmp_string}.png")
-        File.delete("public/images/categories/#{tmp_string}.png")
-      end
-      File.new("public/images/categories/#{tmp_string}.png","w")
-      File.open(Rails.root.join('public/images/', 'categories', "#{tmp_string}.png"), 'wb') do |file|
-        file.write(uploaded_io.read)
-      end
-      tmp_string = tmp_string.gsub(" ","%20")
-      @goal_category.image = "http://zircle.herokuapp.com/images/categories/#{tmp_string}.png"
-      if @goal_category.save
-        render json: {url: @goal_category.image}
-      else
-        render json: {errors: @goal_category.errors}
-      end
+    @goal_category.image = upload_params
+    if @goal_category.save
+      render json: @goal_category
+    else
+      render json: {errors: @goal_category.errors}
     end
   end
 

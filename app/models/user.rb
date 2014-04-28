@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   has_one :user_configurations
   has_one :profile
   has_many :goals, through: :user_goals
+  mount_uploader :image, ImageUploader
 
   accepts_nested_attributes_for :profile
 

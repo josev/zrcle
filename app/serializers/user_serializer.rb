@@ -45,4 +45,10 @@ class UserSerializer < ActiveModel::Serializer
     end
     id
   end
+
+  def image
+    if object.image_url.present?
+      object.image_url
+    end
+  end
 end

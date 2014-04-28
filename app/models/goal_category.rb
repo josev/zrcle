@@ -1,5 +1,6 @@
 class GoalCategory < ActiveRecord::Base
   validates :name, presence: true
+  mount_uploader :image, ImageUploader
 
   def self.get_goal_categories(_params)
     if _params[:id].present?
