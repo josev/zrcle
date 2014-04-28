@@ -51,9 +51,11 @@ class GoalCategoriesController < ApplicationController
       if File.exist?("public/images/categories/#{tmp_string}.png")
         File.delete("public/images/categories/#{tmp_string}.png")
       end
+      File.new("public/images/categories/#{tmp_string}.png","w")
       File.open(Rails.root.join('public/images/', 'categories', "#{tmp_string}.png"), 'wb') do |file|
         file.write(uploaded_io.read)
       end
+      tmp_string = tmp_string.gsub(" ","%20")
       @goal_category.image = "http://zircle.herokuapp.com/images/categories/#{tmp_string}.png"
       if @goal_category.save
         render json: {url: @goal_category.image}

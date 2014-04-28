@@ -67,9 +67,12 @@ class GoalsController < ApplicationController
       if File.exist?("public/images/goals/#{tmp_string}.jpg")
         File.delete("public/images/goals/#{tmp_string}.jpg")
       end
+      File.new("public/images/goals/#{tmp_string}.jpg","w")
       File.open(Rails.root.join('public/images/', 'goals', "#{tmp_string}.jpg"), 'wb') do |file|
         file.write(uploaded_io.read)
       end
+      
+      tmp_string = tmp_string.gsub(" ","%20")
       @goal.image = "http://zircle.herokuapp.com/images/goals/#{tmp_string}.jpg"
       if @goal.save
         render json: {url: @goal.image}
