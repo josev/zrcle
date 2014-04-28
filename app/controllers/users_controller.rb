@@ -3,11 +3,11 @@ class UsersController < ApplicationController
 
   def index
     @users = User.get_users(params)
-    render json: @users
+    render json: @users, root: false
   end
 
   def show
-    render json: @user
+    render json: @user, except: :password
   end
 
   def new
@@ -20,11 +20,12 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user=User.new(user_params)
-    if @user.save
-      render json: @user
-    else
+    @user = User.new
+    @user = @user.save_user(user_params)
+    if @user.errors.present?
       render json: {errors: @user.errors}
+    else
+      render json: @user
     end
   end
 
@@ -59,11 +60,12 @@ class UsersController < ApplicationController
     end
 
     def user_params
-      params.require(:user).permit(:email, :provider, :password, :uid, :nickname)
+      params.require(:user).permit(:email, :provider, :password, :uid, :nickname,:image, :country, :description)
     end
 
+
     def login_params
-      params.permit(:email, :password)
+      params.require(:login).permit(:email, :password, :provider, :oauth_token, :uid)
     end
     def random_params
       params.require(:goal_category_id)

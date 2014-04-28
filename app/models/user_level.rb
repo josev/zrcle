@@ -5,13 +5,13 @@ class UserLevel < ActiveRecord::Base
 
   def self.get_user_levels(_params)
     if params[:user_level_id].present?
-      user_levels = UserLevel.find_by_id(_params[:user_level_id])
+      UserLevel.find_by_id(_params[:user_level_id])
     elsif _params[:user_id].present?
-      user_levels = UserLevel.where(user_id: _params[:user_id])
+      UserLevel.where(user_id: _params[:user_id])
     elsif _params[:level_id].present?
-      user_levels = UserLevel.where(level_id: _params[:level_id])
+      UserLevel.where(level_id: _params[:level_id])
     else
-      user_levels = UserLevel.all
+      UserLevel.all
     end
   end
 end

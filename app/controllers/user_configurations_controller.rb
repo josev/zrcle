@@ -3,7 +3,7 @@ class UserConfigurationsController < ApplicationController
 
   def index
     @user_configurations = UserConfiguration.get_user_configurations(params)
-    render json: @user_configurations
+    render json: @user_configurations, root: false
   end
 
   def show

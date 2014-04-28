@@ -1,16 +1,17 @@
 class GoalStep < ActiveRecord::Base
-  validates :goal_id, :description, presence: true
+  validates :goal_id, :description, :title, :order, presence: true
   belongs_to :goal
+  has_many :user_step
 
   def self.get_goal_steps(_params)
     if _params[:goal_id].present?
-      goal_steps = GoalStep.where(goal_id: _params[:goal_id])
+      GoalStep.where(goal_id: _params[:goal_id]).order(:order)
     elsif _params[:user_id].present?
-      goal_steps = GoalStep.where(user_id: _params[:user_id])
+      GoalStep.where(user_id: _params[:user_id]).order(:goal_id,:order)
     elsif _params[:goal_step_id].present?
-      goal_steps = GoalStep.find_by_id(_params[:goal_step_id])
+      GoalStep.find_by_id(_params[:goal_step_id])
     else
-      goal_steps = GoalStep.all
+      GoalStep.all.order(:goal_id,:order)
     end
   end
 end

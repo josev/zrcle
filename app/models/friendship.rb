@@ -6,13 +6,13 @@ class Friendship < ActiveRecord::Base
 
   def self.get_friendships(_params)
     if _params[:user_id].present?
-      friendships = Friendship.where(user_id: _params[:user_id])
+      Friendship.where(user_id: _params[:user_id])
     elsif _params[:friend_id].present?
-      friendships = Friendship.where(friend_id: _params[:friend_id])
+      Friendship.where(friend_id: _params[:friend_id])
     elsif _params[:friendship_id]
-      friendships = Friendship.find_by_id(_params[:friendship_id])
+      Friendship.find_by_id(_params[:friendship_id])
     else
-      friendships = Friendship.all
+      Friendship.all
     end
   end
 
@@ -21,7 +21,7 @@ class Friendship < ActiveRecord::Base
     lst = Array.new
     lst = friends.select("friend_id as id").where(user_id: user_id)
     lst += friends.select("user_id as id").where(friend_id: user_id)
-    users = Profile.where(user_id: lst)
+    users = User.where(id: lst)
   end
 
   def self.get_friends_by_name(user_id,text)
@@ -29,7 +29,7 @@ class Friendship < ActiveRecord::Base
     lst = Array.new
     lst = friends.select("friend_id as id").where(user_id: user_id)
     lst += friends.select("user_id as id").where(friend_id: user_id)
-    users = Profile.where(user_id: lst).where("name like '%#{text}%'")
+    users = User.where(id: lst).where("name like '%#{text}%'")
   end
 
 end

@@ -3,7 +3,7 @@ class GoalStepsController < ApplicationController
 
   def index
     @goal_steps = GoalStep.get_goal_steps(params)
-    render json: @goal_steps
+    render json: @goal_steps, root: false
   end
 
   def show
@@ -21,7 +21,6 @@ class GoalStepsController < ApplicationController
 
   def create
     @goal_step=GoalStep.new(goal_step_params)
-    @goal_step.date = Date.today
     if @goal_step.save
       render json: @goal_step
     else
@@ -51,6 +50,6 @@ class GoalStepsController < ApplicationController
     end
 
     def goal_step_params
-      params.require(:goal_step).permit(:goal_id, :description, :status)
+      params.require(:goal_step).permit(:goal_id, :description,:title, :order)
     end
 end

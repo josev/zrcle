@@ -3,12 +3,17 @@ class GoalsController < ApplicationController
   
   def index
     @goals = Goal.get_goals(params)
-    render json: @goals
+    render json: @goals, root: false
   end
 
   def show
     render json: @goal
   end
+
+  def default_serializer_options
+    user_id= params[:user_id] if params[:user_id].present?  
+    {user_id: user_id}  
+  end  
 
   def new
     @goal= Goal.new
@@ -47,7 +52,7 @@ class GoalsController < ApplicationController
 
   def search_by_name
     @goals = Goal.search_by_name(search_params)
-    render json: @goals
+    render json: @goals, root: false
   end
 
   def search_by_category

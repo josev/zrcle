@@ -5,13 +5,13 @@ class GoalRemind < ActiveRecord::Base
 
   def self.get_goal_reminds(_params)
     if _params[:user_id].present?
-      goal_reminds = GoalRemind.where(user_id: _params[:user_id])
+      GoalRemind.where(user_id: _params[:user_id])
     elsif _params[:goal_id].present?
-      goal_reminds = GoalRemind.where(goal_id: _params[:goal_id])
+      GoalRemind.where(goal_id: _params[:goal_id])
     elsif _params[:goal_remind_id].present?
-      goal_reminds = GoalRemind.find_by_id(_params[:goal_remind_id])
+      GoalRemind.find_by_id(_params[:goal_remind_id])
     else
-      goal_reminds = GoalRemind.all
+      GoalRemind.all
     end
   end
 end

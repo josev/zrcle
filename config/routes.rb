@@ -1,57 +1,64 @@
 Zrcle::Application.routes.draw do
-  match '/goals/:goal_id/users/:id', to: 'user_goals#create_by_goals',:via => [:post]
-  match '/users/:user_id/goals/:id', to: 'user_goals#create_by_users',:via => [:post]
+  match '/goals/:goal_id/users/:id', to: 'user_goals#create_by_goals', via: [:post]
+  match '/users/:user_id/goals/:id', to: 'user_goals#create_by_users', via: [:post]
+  match 'users/:user_id/goals/:goal_id/current_step', to: 'user_steps#current_step', via: [:get]
   get 'goals/search_by_name/:text', to: 'goals#search_by_name'
   get 'goals/search_by_category/:text', to: 'goals#search_by_category'
   get 'users/login', to: 'users#login'
   get 'users/random', to: 'users#random_user'
-  get 'friendships/get_friends/:id', to: 'friendships#get_friends'
+  get 'friendships/get_friends/:user_id', to: 'friendships#get_friends'
   get 'friendships/get_friends_by_name/:text', to: 'friendships#get_friends_by_name'
+  post 'users/login', to: 'users#login'
+  post 'users/:user_id/goals/:goal_id/step_complete', to: 'user_steps#step_complete'
 
   resources :goals do
     resources :goal_types, only: [:index]
-    resources :user_goals, only: [:index]
+    resources :user_goals, only: [:index, :delete]
     resources :goal_categories, only: [:index]
     resources :users, only: [:index]
     resources :goal_reminds, only: [:index]
     resources :goal_rates, only: [:index]
-    resources :goal_step_calendars, only: [:index]
+    resources :goal_steps, only: [:index]
     resources :comments, only: [:index]
     resources :follow_goals, only: [:index]
+    resources :user_steps, only: [:index]
   end
   resources :users do
-    resources :user_goals, only: [:index]
-    resources :goals, only: [:index]
+    resources :user_goals, only: [:index, :destroy]
+    resources :goals, only: [:index, :show]
     resources :user_configurations, only: [:index]
-    resources :profiles, only: [:index]
+    #resources :profiles, only: [:index]
     resources :follow_goals, only: [:index]
+    resources :follow_users, only: [:index]
     resources :friendships, only: [:index]
+    resources :user_steps, only: [:index, :delete]
   end
-  resources :comment_likes
-  resources :comment_replies
+  #resources :comment_likes
+  #resources :comment_replies
   resources :comments do
     resources :comment_replies, only: [:index]
     resources :comment_likes, only: [:index]
   end
   resources :follow_goals
   resources :follow_users
-  resources :friendships
+  #resources :friendships
   resources :goal_categories do
     resources :goals, only: [:index]
   end
-  resources :goal_rates
-  resources :goal_reminds
-  resources :goal_step_calendars
+  #resources :goal_rates
+  #resources :goal_reminds
+  #resources :goal_steps
   resources :goal_types do
     resources :goals
   end
-  resources :profiles
-  resources :user_configurations
+  #resources :profiles
+  #resources :user_configurations
   resources :user_goals do
     resources :goals, only: [:index]
     resources :users, only: [:index]
   end
-  resources :user_levels
+  #resources :user_levels
+  #resources :user_steps
 
 
 

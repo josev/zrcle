@@ -3,7 +3,7 @@ class GoalRemindsController < ApplicationController
 
   def index
     @goal_reminds = GoalRemind.get_goal_reminds(params)
-    render json: @goal_reminds
+    render json: @goal_reminds, root: false
   end
 
   def show

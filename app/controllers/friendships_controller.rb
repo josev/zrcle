@@ -3,7 +3,7 @@ class FriendshipsController < ApplicationController
 
   def index
     @friendships = Friendship.get_friendships(params)
-    render json: @friendships
+    render json: @friendships, root: false
   end
 
   def show
