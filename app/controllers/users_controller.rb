@@ -51,7 +51,7 @@ class UsersController < ApplicationController
 
   def random_user
     @r_user = User.get_user_random(@user)
-    render json: @r_user.map{|user|{id: user.id, nickname: user.nickname, email: user.email, image: user.image_url}}
+    render json: @r_user
   end
 
   def user_image
