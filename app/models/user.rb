@@ -24,6 +24,7 @@ class User < ActiveRecord::Base
       User.all
     end
   end
+  
   def self.login(_params)
     if _params[:provider]=='facebook'
       user = User.where(email: _params[:email]).first
@@ -41,9 +42,16 @@ class User < ActiveRecord::Base
     user
   end
 
-  def self.get_user_random(goal_category_id)
+  def self.get_user_random(user)
+    u_categories = Array.new
+    user.goals.each do |g|
+      if g.goal.present?
+        u_categories.push(g.goal.goal_category_id)
+      end
+    end
+    goal_category_id = u_categories.shuffle
     goals = Goal.select("id").where(goal_category_id: goal_category_id)
-    user_goals = UserGoal.select("user_id").where(goal_id: goals).group("user_id")
+    user_goals = UserGoal.select("user_id").where(goal_id: goals).where.not(user_id: user.id).group("user_id")
     r = user_goals.shuffle
     user= User.where(id: r.first.user_id)
   end

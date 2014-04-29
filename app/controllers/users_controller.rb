@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :random_user]
 
   def index
     @users = User.get_users(params)
@@ -50,8 +50,8 @@ class UsersController < ApplicationController
   end
 
   def random_user
-    @user = User.get_user_random(random_params)
-    render json: @user
+    @r_user = User.get_user_random(@user)
+    render json: @r_user.map{|user|{id: user.id, nickname: user.nickname, email: user.email, image: user.image_url}}
   end
 
   def user_image
@@ -74,9 +74,6 @@ class UsersController < ApplicationController
 
     def login_params
       params.require(:login).permit(:email, :password, :provider, :oauth_token, :uid)
-    end
-    def random_params
-      params.require(:goal_category_id)
     end
 
     def upload_params
