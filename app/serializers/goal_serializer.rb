@@ -67,7 +67,7 @@ class GoalSerializer < ActiveModel::Serializer
 
   def image
     if object.image_url.present?
-      object.image_url
+      "http://zircle.herokuapp.com#{object.image_url.to_s}"
     end
   end
 end
