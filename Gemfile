@@ -15,6 +15,7 @@ gem 'unicorn'
 gem 'active_model_serializers'
 
 gem "carrierwave"
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
