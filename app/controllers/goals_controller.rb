@@ -7,7 +7,7 @@ class GoalsController < ApplicationController
   end
 
   def show
-    render json: @goal
+    render json: @goal, root: false
   end
 
   def default_serializer_options
