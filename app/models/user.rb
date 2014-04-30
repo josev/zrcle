@@ -51,7 +51,7 @@ class User < ActiveRecord::Base
     end
     goal_category_id = u_categories.shuffle
     goals = Goal.select("id").where(goal_category_id: goal_category_id)
-    user_goals = UserGoal.where(goal_id: goals).where.not(user_id: user.id)
+    user_goals = UserGoal.where(goal_id: goals, private: false).where.not(user_id: user.id)
     r = user_goals.shuffle
     r_user = User.where(id: r.first.user_id).first
     random = Random.new(r.first.goal_id, r_user.id, r_user.nickname, r_user.email, r_user.image)

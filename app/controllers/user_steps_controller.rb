@@ -56,7 +56,7 @@ class UserStepsController < ApplicationController
       if @next_step.errors.present?
         render json: {errors: @next_step.errors}
       else
-        render json: @next_step
+        render json: @next_step.goal_step
       end
     else
       render json: @next_step
