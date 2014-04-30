@@ -4,8 +4,8 @@ Zrcle::Application.routes.draw do
   match 'users/:user_id/goals/:goal_id/current_step', to: 'user_steps#current_step', via: [:get]
   get 'goals/search_by_name/:text', to: 'goals#search_by_name'
   get 'goals/search_by_category/:text', to: 'goals#search_by_category'
-  get 'users/login', to: 'users#login'
-  get 'users/random', to: 'users#random_user'
+  post 'users/login', to: 'users#login'
+  get 'users/:id/random', to: 'users#random_user'
   get 'friendships/get_friends/:user_id', to: 'friendships#get_friends'
   get 'friendships/get_friends_by_name/:text', to: 'friendships#get_friends_by_name'
   post 'users/login', to: 'users#login'
@@ -44,7 +44,7 @@ Zrcle::Application.routes.draw do
   end
   resources :follow_goals
   resources :follow_users
-  #resources :friendships
+  resources :friendships
   resources :goal_categories do
     resources :goals, only: [:index]
   end

@@ -45,4 +45,12 @@ class UserSerializer < ActiveModel::Serializer
     end
     id
   end
+
+  def image
+    if object.image_url.present?
+      "http://zircle.herokuapp.com#{object.image_url.to_s}"
+    else
+      nil
+    end
+  end
 end

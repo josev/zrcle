@@ -4,6 +4,7 @@ class Goal < ActiveRecord::Base
     belongs_to :goal_type
     has_many :users, through: :user_goals
     has_many :user_goals
+    mount_uploader :image, ImageUploader
     #after_create :create_usergoal
 
     #private

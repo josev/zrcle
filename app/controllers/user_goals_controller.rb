@@ -48,6 +48,7 @@ class UserGoalsController < ApplicationController
     @user_goal.user_id = params[:user_id]
     @user_goal.goal_id = params[:id]
     @user_goal.state = "1"
+    @user_goal.private = params[:private]
     if @user_goal.save
       @user_goal.start_goal
       render json: @user_goal

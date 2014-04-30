@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   has_one :user_configurations
   has_one :profile
   has_many :goals, through: :user_goals
+  mount_uploader :image, ImageUploader
 
   accepts_nested_attributes_for :profile
 
@@ -23,6 +24,7 @@ class User < ActiveRecord::Base
       User.all
     end
   end
+  
   def self.login(_params)
     if _params[:provider]=='facebook'
       user = User.where(email: _params[:email]).first
@@ -40,11 +42,19 @@ class User < ActiveRecord::Base
     user
   end
 
-  def self.get_user_random(goal_category_id)
+  def self.get_user_random(user)
+    u_categories = Array.new
+    user.goals.each do |g|
+      if g.goal.present?
+        u_categories.push(g.goal.goal_category_id)
+      end
+    end
+    goal_category_id = u_categories.shuffle
     goals = Goal.select("id").where(goal_category_id: goal_category_id)
-    user_goals = UserGoal.select("user_id").where(goal_id: goals).group("user_id")
+    user_goals = UserGoal.where(goal_id: goals, private: false).where.not(user_id: user.id)
     r = user_goals.shuffle
-    user= User.where(id: r.first.user_id)
+    r_user = User.where(id: r.first.user_id).first
+    random = Random.new(r.first.goal_id, r_user.id, r_user.nickname, r_user.email, r_user.image)
   end
 
   def save_user(_params)
@@ -94,5 +104,16 @@ class User < ActiveRecord::Base
 
   def goals
     UserGoal.where(user_id: self.id)
+  end
+end
+
+class Random
+  @@no_of_randoms = 0
+  def initialize(goal_id, user_id, nickname, email, image)
+    @goal_id = goal_id
+    @user_id = user_id
+    @nickname = nickname
+    @email = email
+    @image = image.present? ? image : nil
   end
 end

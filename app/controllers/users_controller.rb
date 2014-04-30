@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :random_user]
 
   def index
     @users = User.get_users(params)
@@ -50,29 +50,16 @@ class UsersController < ApplicationController
   end
 
   def random_user
-    @user = User.get_user_random(random_params)
-    render json: @user
+    @r_user = User.get_user_random(@user)
+    render json: @r_user
   end
 
   def user_image
-    uploaded_io = upload_params
-    if uploaded_io!=nil
-      tmp_string = "#{@user.id}-#{@user.name}"
-      if File.exist?("public/images/users/#{tmp_string}.jpg")
-        File.delete("public/images/users/#{tmp_string}.jpg")
-      end
-      File.new("public/images/users/#{tmp_string}.jpg","w")
-      File.open(Rails.root.join('public/images/', 'users', "#{tmp_string}.jpg"), 'wb') do |file|
-        file.write(uploaded_io.read)
-      end
-      
-      tmp_string = tmp_string.gsub(" ","%20")
-      @user.image = "http://zircle.herokuapp.com/images/users/#{tmp_string}.jpg"
-      if @user.save
-        render json: {url: @user.image}
-      else
-        render json: {errors: @user.errors}
-      end
+    @user.image = upload_params
+    if @user.save
+      render json: @user
+    else
+      render json: {errors: @user.errors}
     end
   end
 
@@ -85,11 +72,11 @@ class UsersController < ApplicationController
       params.require(:user).permit(:email, :provider, :password, :uid, :nickname,:image, :country, :description)
     end
 
-
     def login_params
       params.require(:login).permit(:email, :password, :provider, :oauth_token, :uid)
     end
-    def random_params
-      params.require(:goal_category_id)
+
+    def upload_params
+      params.require(:image)
     end
 end
