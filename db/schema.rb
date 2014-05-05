@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(version: 20140414161533) do
     t.integer  "follow_user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "status"
   end
 
   create_table "friendships", force: true do |t|
