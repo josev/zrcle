@@ -65,6 +65,16 @@ class FriendshipsController < ApplicationController
     render json: @friends
   end
 
+  def requests_friend_received
+    @friendships = Friendship.requests_friend_received(params[:user_id])
+    render json: @friendships, root: false
+  end
+
+  def requests_friend_sent
+    @friendships = Friendship.requests_friend_sent(params[:user_id])
+    render json: @friendships, root: false
+  end
+
   private
     def set_friendship
       @friendship = Friendship.find_by_id(params[:id])

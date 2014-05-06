@@ -16,6 +16,8 @@ Zrcle::Application.routes.draw do
   get 'users/:id/send_motivational', to: 'comments#send_motivational'
   get 'users/:id/receive_motivational', to: 'comments#receive_motivational'
   get 'users/:user_id/goals/:goal_id/friends', to: 'friendships#get_friends_by_goal'
+  get 'users/:user_id/requests_received', to: 'friendships#requests_friend_received'
+  get 'users/:user_id/requests_sent', to: 'friendships#requests_friend_sent'
 
   resources :goals do
     resources :goal_types, only: [:index]

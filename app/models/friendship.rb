@@ -42,6 +42,14 @@ class Friendship < ActiveRecord::Base
     User.where(id: friends)
   end
 
+  def self.requests_friend_received(user_id)
+    Friendship.where(friend_id: user_id, status: 2)
+  end
+
+  def self.requests_friend_sent(user_id)
+    Friendship.where(user_id: user_id, status: 2)
+  end
+
   protected
     def exist
       request = Friendship.where(user_id: self.user_id, friend_id: self.friend_id).first
