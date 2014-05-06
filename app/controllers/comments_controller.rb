@@ -1,5 +1,6 @@
 class CommentsController < ApplicationController
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:send_motivational, :receive_motivational]
 
   def index
     @comments = Comment.get_comments(params)
@@ -44,9 +45,23 @@ class CommentsController < ApplicationController
     end
   end
 
+  def send_motivational
+    @motivationals = Comment.get_motivational_send(@user)
+    render json: @motivationals
+  end
+
+  def receive_motivational
+    @motivationals = Comment.get_motivational_receive(@user)
+    render json: @motivationals
+  end
+
   private
     def set_comment
       @comment = Comment.find_by_id(params[:id])
+    end
+
+    def set_user
+      @user = User.find_by_id(params[:id])
     end
 
     def comment_params
