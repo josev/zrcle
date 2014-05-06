@@ -15,6 +15,7 @@ Zrcle::Application.routes.draw do
   patch 'users/:id/user_image', to: 'users#user_image'
   get 'users/:id/send_motivational', to: 'comments#send_motivational'
   get 'users/:id/receive_motivational', to: 'comments#receive_motivational'
+  get 'users/:user_id/goals/:goal_id/friends', to: 'friendships#get_friends_by_goal'
 
   resources :goals do
     resources :goal_types, only: [:index]
