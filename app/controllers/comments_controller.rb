@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
-  before_action :set_user, only: [:send_motivational, :receive_motivational]
+  before_action :set_user, only: [:motivational_sent, :motivational_received]
 
   def index
     @comments = Comment.get_comments(params)
@@ -45,13 +45,13 @@ class CommentsController < ApplicationController
     end
   end
 
-  def send_motivational
-    @motivationals = Comment.get_motivational_send(@user)
+  def motivational_sent
+    @motivationals = Comment.get_motivational_sent(@user)
     render json: @motivationals
   end
 
-  def receive_motivational
-    @motivationals = Comment.get_motivational_receive(@user)
+  def motivational_received
+    @motivationals = Comment.get_motivational_received(@user)
     render json: @motivationals
   end
 
