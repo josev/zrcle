@@ -95,10 +95,10 @@ class User < ActiveRecord::Base
   end
 
   def friends
-    friends = Friendship.where("user_id = #{self.id} or friend_id = #{self.id}")
+    friends = Friendship.where("user_id = #{self.id} or friend_id = #{self.id} and status = 1")
     lst = Array.new
-    lst = friends.select("friend_id as id").where(user_id: self.id)
-    lst += friends.select("user_id as id").where(friend_id: self.id)
+    lst = friends.select("friend_id as id").where(user_id: self.id, status: 1)
+    lst += friends.select("user_id as id").where(friend_id: self.id, status: 1)
     users = User.where(id: lst)
   end
 

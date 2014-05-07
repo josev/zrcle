@@ -15,11 +15,11 @@ class Comment < ActiveRecord::Base
     end
   end
 
-  def self.get_motivational_send(user)
+  def self.get_motivational_sent(user)
     Comment.where(user_id: user.id).where.not(to_user_id: nil)
   end
 
-  def self.get_motivational_receive(user)
+  def self.get_motivational_received(user)
     Comment.where(to_user_id: user.id).where.not(user_id: nil)
   end
 end

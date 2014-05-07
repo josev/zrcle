@@ -1,5 +1,6 @@
 class Friendship < ActiveRecord::Base
   validates :user_id, :friend_id, :status, presence: true
+  before_create :exist
   belongs_to :user
   belongs_to :user, :foreign_key => "friend_id"
   alias_attribute :friend, :user
@@ -31,5 +32,42 @@ class Friendship < ActiveRecord::Base
     lst += friends.select("user_id as id").where(friend_id: user_id)
     users = User.where(id: lst).where("name like '%#{text}%'")
   end
+
+  def self.get_friends_by_goal(user, goal_id)
+    f_goal = UserGoal.where(user_id: user.friends, goal_id: goal_id)
+    friends = Array.new
+    f_goal.each do |ug|
+      friends.push(ug.user_id)
+    end
+    User.where(id: friends)
+  end
+
+  def self.requests_friend_received(user_id)
+    Friendship.where(friend_id: user_id, status: 2)
+  end
+
+  def self.requests_friend_sent(user_id)
+    Friendship.where(user_id: user_id, status: 2)
+  end
+
+  protected
+    def exist
+      request = Friendship.where(user_id: self.user_id, friend_id: self.friend_id).first
+      if request.present?
+        if request.status == 2
+          errors.add(:friend_request, 'you already sent this friend request')
+        else
+          errors.add(:friend_request, 'this user is already your friend')
+        end
+      end
+      request = Friendship.where(user_id: self.friend_id, friend_id: self.user_id).first
+      if request.present?
+        if request.status == 2
+          errors.add(:friend_request, 'you have this friend request, only need confirm')
+        else
+          errors.add(:friend_request, 'this user is already your friend')
+        end
+      end 
+    end
 
 end

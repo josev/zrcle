@@ -1,6 +1,6 @@
 class UserGoal < ActiveRecord::Base
   validates :user_id, :goal_id, :state, presence: true
-  validate :exist
+  before_create :exist
   belongs_to :user
   belongs_to :goal
 

@@ -1,5 +1,10 @@
 class FriendshipsController < ApplicationController
-  before_action :set_frienship, only: [:show, :edit, :update, :destroy]
+  before_action :set_friendship, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:get_friends_by_goal]
+
+  def default_serializer_options
+    {root: false, except: [:password, :provider, :uid, :oauth_token, :country, :description, :follows, :friends, :finishied_goals, :goals, :goals_ids]}
+  end
 
   def index
     @friendships = Friendship.get_friendships(params)
@@ -21,6 +26,7 @@ class FriendshipsController < ApplicationController
 
   def create
     @friendship=Friendship.new(friendship_params)
+    @friendship.status = 2
     if @friendship.save
       render json: @friendship
     else
@@ -54,9 +60,28 @@ class FriendshipsController < ApplicationController
     render json: @friends
   end
 
+  def get_friends_by_goal
+    @friends = Friendship.get_friends_by_goal(@user, params[:goal_id])
+    render json: @friends
+  end
+
+  def requests_friend_received
+    @friendships = Friendship.requests_friend_received(params[:user_id])
+    render json: @friendships, root: false
+  end
+
+  def requests_friend_sent
+    @friendships = Friendship.requests_friend_sent(params[:user_id])
+    render json: @friendships, root: false
+  end
+
   private
     def set_friendship
       @friendship = Friendship.find_by_id(params[:id])
+    end
+
+    def set_user
+      @user = User.find_by_id(params[:user_id])
     end
 
     def friendship_params
