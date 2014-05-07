@@ -3,7 +3,7 @@ class FriendshipsController < ApplicationController
   before_action :set_user, only: [:get_friends_by_goal]
 
   def default_serializer_options
-    {except: [:password, :provider, :uid, :oauth_token, :country, :description, :follows, :friends, :finishied_goals, :goals, :goals_ids]}
+    {root: false, except: [:password, :provider, :uid, :oauth_token, :country, :description, :follows, :friends, :finishied_goals, :goals, :goals_ids]}
   end
 
   def index

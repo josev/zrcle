@@ -50,4 +50,7 @@ class Goal < ActiveRecord::Base
     UserStep.where(user_id: user_id, goal_step_id: steps, status: 2).first
   end
 
+  def get_users_by_goal(user)
+    User.where(id: self.users.where(user_goals:{private: false})).where.not(id: user.friends).where.not(id: user.id)
+  end
 end

@@ -1,6 +1,7 @@
 class GoalsController < ApplicationController
-  before_action :set_goal, only: [:show, :edit, :update, :destroy, :goal_image]
-  
+  before_action :set_goal, only: [:show, :edit, :update, :destroy, :goal_image, :get_users_by_goal]
+  before_action :set_user, only: [:get_users_by_goal]
+
   def index
     @goals = Goal.get_goals(params)
     render json: @goals, root: false
@@ -12,7 +13,7 @@ class GoalsController < ApplicationController
 
   def default_serializer_options
     user_id= params[:user_id] if params[:user_id].present?  
-    {user_id: user_id}  
+    {root: false, user_id: user_id, except: [:password, :provider, :uid, :oauth_token, :country, :description, :follows, :friends, :finishied_goals, :goals, :goals_ids]}  
   end  
 
   def new
@@ -69,9 +70,18 @@ class GoalsController < ApplicationController
     end
   end
 
+  def get_users_by_goal
+    @users = @goal.get_users_by_goal(@user)
+    render json: @users
+  end
+
   private
     def set_goal
       @goal = Goal.find_by_id(params[:id])
+    end
+
+    def set_user
+      @user = User.find_by_id(params[:user_id])
     end
 
     def goal_params
