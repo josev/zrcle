@@ -20,6 +20,7 @@ class UserStep < ActiveRecord::Base
   end
 
   def self.step_complete(_params)
+    user = User.find_by_id(_params[:user_id])
     current = UserStep.current_step(_params)
     if current.present?
       current.status = 3
@@ -32,6 +33,7 @@ class UserStep < ActiveRecord::Base
         if step_next.present?
           step_next.status = 2
           if step_next.save
+            user.user_level.add_points(10)
             step_next
           end
         end
@@ -40,6 +42,7 @@ class UserStep < ActiveRecord::Base
           user_goal = UserGoal.where(user_id: current.user_id, goal_id: current.goal_step.goal_id).first
           user_goal.state = 2
           if user_goal.save
+            user.user_level.add_points(100)
             nil
           else
             user_goal

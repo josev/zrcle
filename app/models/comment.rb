@@ -2,6 +2,7 @@ class Comment < ActiveRecord::Base
     validates :goal_id, :user_id, :comment, presence: true
     belongs_to :goal
     belongs_to :user
+    after_create :add_points
     
   def self.get_comments(_params)
     if _params[:goal_id].present?
@@ -22,4 +23,11 @@ class Comment < ActiveRecord::Base
   def self.get_motivational_received(user)
     Comment.where(to_user_id: user.id).where.not(user_id: nil)
   end
+
+  protected
+    def add_points
+      if self.to_user_id.present?
+        self.user.user_level.add_points(50)
+      end
+    end
 end
