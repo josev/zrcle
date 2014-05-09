@@ -27,7 +27,7 @@ class UserSerializer < ActiveModel::Serializer
   end
 
   def finishied_goals
-  	object.goals.count
+  	object.finishied_goals.count
   end
 
   def goals
