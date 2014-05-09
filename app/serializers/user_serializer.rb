@@ -1,8 +1,6 @@
 class UserSerializer < ActiveModel::Serializer
   attributes :id, :nickname, :email, :password, :provider, :uid, :oauth_token, :image,
-  :country, :description, :follows, :friends, :finishied_goals, :goals, :goals_ids
-
-  #has_many :goals, through: :user_goals
+  :country, :description, :follows, :friends, :finishied_goals, :goals, :goals_ids, :lvl, :points, :required_points
 
   def country
   	if object.profile.present?
@@ -52,5 +50,17 @@ class UserSerializer < ActiveModel::Serializer
     else
       nil
     end
+  end
+
+  def lvl
+    object.level.present? ? object.level.level_number : 0
+  end
+
+  def points
+    object.user_level.present? ? object.user_level.points : 0
+  end
+
+  def required_points
+    object.level.present? ? object.level.required_points : 0
   end
 end

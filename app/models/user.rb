@@ -1,8 +1,11 @@
 class User < ActiveRecord::Base
   validates :nickname, presence: :true
+  after_create :create_lvl
   validates_uniqueness_of :email
   has_one :user_configurations
   has_one :profile
+  has_one :user_level
+  has_one :level, through: :user_level
   has_many :goals, through: :user_goals
   mount_uploader :image, ImageUploader
 
@@ -103,8 +106,13 @@ class User < ActiveRecord::Base
   end
 
   def goals
-    UserGoal.where(user_id: self.id)
+    UserGoal.where(user_id: self.id, state: "2")
   end
+
+  protected
+    def create_lvl
+      UserLevel.create(level_id: 1, user_id: self.id,points: 0)
+    end
 end
 
 class Random
