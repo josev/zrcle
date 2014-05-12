@@ -6,7 +6,8 @@ class Comment < ActiveRecord::Base
     
   def self.get_comments(_params)
     if _params[:goal_id].present?
-      Comment.joins("full outer join user_goals on comments.user_id = user_goals.user_id and comments.goal_id = user_goals.goal_id").where("user_goals.private = false and comments.goal_id = #{_params[:goal_id]} and comments.to_user_id is null")
+      #Comment.joins("full outer join user_goals on comments.user_id = user_goals.user_id and comments.goal_id = user_goals.goal_id").where("user_goals.private = false and comments.goal_id = #{_params[:goal_id]} and comments.to_user_id is null")
+      Comment.joins("join user_goals on comments.user_id = user_goals.user_id and comments.goal_id = user_goals.goal_id").where(user_goals: {private: false}, goal_id: _params[:goal_id], to_user_id: nil)
     elsif _params[:user_id].present?
       Comment.where(user_id: _params[:user_id])
     elsif _params[:comment_id].present?
