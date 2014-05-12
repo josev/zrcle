@@ -22,7 +22,7 @@ class Goal < ActiveRecord::Base
     elsif _params[:goal_category_id].present?
       Goal.where(goal_category_id: _params[:goal_category_id])
     elsif _params[:user_id].present?
-      user_goals = UserGoal.select("goal_id AS id").where(user_id: _params[:user_id])
+      user_goals = UserGoal.select("goal_id AS id").where(user_id: _params[:user_id], state: ["1","2"]).order(:state)
       if user_goals.present?
         Goal.where(id: user_goals)
       end

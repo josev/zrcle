@@ -1,8 +1,9 @@
 class UserGoal < ActiveRecord::Base
   validates :user_id, :goal_id, :state, presence: true
-  before_create :exist
+  validate :exist
   belongs_to :user
   belongs_to :goal
+  after_save :update_comments
 
   def self.get_user_goals(_params)
     if _params[:user_goal_id].present?
@@ -29,8 +30,13 @@ class UserGoal < ActiveRecord::Base
   end
   protected
     def exist
-      if UserGoal.where(user_id: self.user_id, goal_id: self.goal_id).present?
-        errors.add(:goal, 'you are already in this goal')
+      user_goal = UserGoal.where(user_id: self.user_id, goal_id: self.goal_id).first
+      if user_goal.present?
+        if user_goal.state == "2"
+          self.errors.add(:goal, 'you have already completed this goal')
+        end
       end
+    end
+    def update_comments
     end
 end

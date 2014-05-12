@@ -1,24 +1,28 @@
 Zrcle::Application.routes.draw do
-  match '/goals/:goal_id/users/:id', to: 'user_goals#create_by_goals', via: [:post]
-  match '/users/:user_id/goals/:id', to: 'user_goals#create_by_users', via: [:post]
+  match '/goals/:goal_id/users/:user_id', to: 'user_goals#create_by_goals', via: [:post]
+  match '/users/:user_id/goals/:goal_id', to: 'user_goals#create_by_users', via: [:post]
+
   match 'users/:user_id/goals/:goal_id/current_step', to: 'user_steps#current_step', via: [:get]
   get 'goals/search_by_name/:text', to: 'goals#search_by_name'
   get 'goals/search_by_category/:text', to: 'goals#search_by_category'
-  post 'users/login', to: 'users#login'
   get 'users/:id/random', to: 'users#random_user'
   get 'friendships/get_friends/:user_id', to: 'friendships#get_friends'
   get 'friendships/get_friends_by_name/:text', to: 'friendships#get_friends_by_name'
-  post 'users/login', to: 'users#login'
-  post 'users/:user_id/goals/:goal_id/step_complete', to: 'user_steps#step_complete'
-  patch 'goals/:id/goal_image', to: 'goals#goal_image'
-  patch 'goal_categories/:id/category_image', to: 'goal_categories#category_image'
-  patch 'users/:id/user_image', to: 'users#user_image'
   get 'users/:id/motivational_sent', to: 'comments#motivational_sent'
   get 'users/:id/motivational_received', to: 'comments#motivational_received'
   get 'users/:user_id/goals/:goal_id/friends', to: 'friendships#get_friends_by_goal'
   get 'users/:user_id/requests_received', to: 'friendships#requests_friend_received'
   get 'users/:user_id/requests_sent', to: 'friendships#requests_friend_sent'
   get 'goals/:id/users/:user_id/users_by_goal', to: 'goals#get_users_by_goal'
+
+  post 'users/login', to: 'users#login'
+  post 'users/login', to: 'users#login'
+  post 'users/:user_id/goals/:goal_id/step_complete', to: 'user_steps#step_complete'
+
+  patch 'goals/:id/goal_image', to: 'goals#goal_image'
+  patch 'goal_categories/:id/category_image', to: 'goal_categories#category_image'
+  patch 'users/:id/user_image', to: 'users#user_image'
+  patch 'users/:user_id/goals/:goal_id/disable', to: 'user_goals#disable_goal'
 
   resources :goals do
     resources :goal_types, only: [:index]
