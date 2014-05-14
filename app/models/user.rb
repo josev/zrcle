@@ -47,17 +47,27 @@ class User < ActiveRecord::Base
 
   def self.get_user_random(user)
     u_categories = Array.new
-    user.goals.each do |g|
-      if g.goal.present?
-        u_categories.push(g.goal.goal_category_id)
+    if user.goals.present?
+      user.goals.each do |g|
+        if g.goal.present?
+          u_categories.push(g.goal.goal_category_id)
+        end
+      end
+    else
+      GoalCategory.all.each do |c|
+        u_categories.push(c.id)
       end
     end
     goal_category_id = u_categories.shuffle
     goals = Goal.select("id").where(goal_category_id: goal_category_id)
     user_goals = UserGoal.where(goal_id: goals, private: false).where.not(user_id: user.id)
     r = user_goals.shuffle
-    r_user = User.where(id: r.first.user_id).first
-    random = Random.new(r.first.goal_id, r_user.id, r_user.nickname, r_user.email, r_user.image)
+    if r.present?
+      r_user = User.where(id: r.first.user_id).first
+      random = Random.new(r.first.goal_id, r_user.id, r_user.nickname, r_user.email, r_user.image)
+    else
+      nil
+    end
   end
 
   def save_user(_params)
