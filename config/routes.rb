@@ -1,8 +1,8 @@
 Zrcle::Application.routes.draw do
   match '/goals/:goal_id/users/:user_id', to: 'user_goals#create_by_goals', via: [:post]
   match '/users/:user_id/goals/:goal_id', to: 'user_goals#create_by_users', via: [:post]
-
   match 'users/:user_id/goals/:goal_id/current_step', to: 'user_steps#current_step', via: [:get]
+  
   get 'goals/search_by_name/:text', to: 'goals#search_by_name'
   get 'goals/search_by_category/:text', to: 'goals#search_by_category'
   get 'users/:id/random', to: 'users#random_user'

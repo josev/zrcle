@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :profile
 
   def goals
-    UserGoal.where(user_id: self.id, state: "1")
+    UserGoal.where(user_id: self.id, state: ["1","2"])
   end
 
   def self.get_users(_params)
