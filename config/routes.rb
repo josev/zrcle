@@ -14,6 +14,8 @@ Zrcle::Application.routes.draw do
   get 'users/:user_id/requests_received', to: 'friendships#requests_friend_received'
   get 'users/:user_id/requests_sent', to: 'friendships#requests_friend_sent'
   get 'goals/:id/users/:user_id/users_by_goal', to: 'goals#get_users_by_goal'
+  get 'users/:id/follows', to: 'follow_users#follows'
+  get 'users/:id/follow_me', to: 'follow_users#follow_me'
 
   post 'users/login', to: 'users#login'
   post 'users/login', to: 'users#login'

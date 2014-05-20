@@ -13,4 +13,14 @@ class FollowUser < ActiveRecord::Base
       FollowUser.all
     end
   end
+
+  def self.follows(user)
+     fwls = FollowUser.select("follow_user_id as id").where(user_id: user.id, status: 1)
+    User.where(id: fwls)
+  end
+
+  def self.follow_me(user)
+    flws = FollowUser.select("user_id as id").where(follow_user_id: user.id, status: 1)
+    User.where(id: flws)
+  end
 end

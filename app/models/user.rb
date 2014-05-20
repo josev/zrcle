@@ -130,6 +130,16 @@ class User < ActiveRecord::Base
     end
   end
 
+  def follows
+    flws = FollowUser.select("follow_user_id as id").where(user_id: self.id, status: 1)
+    User.where(id: flws)
+  end
+
+  def follow_me
+    flws = FollowUser.select("user_id as id").where(follow_user_id: self.id, status: 1)
+    User.where(id: flws)
+  end
+
   protected
     def create_lvl
       UserLevel.create(level_id: 1, user_id: self.id,points: 0)
