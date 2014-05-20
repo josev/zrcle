@@ -119,6 +119,17 @@ class User < ActiveRecord::Base
     UserGoal.where(user_id: self.id, state: "2")
   end
 
+  def edit_user(user, profile, _params)
+    profile.attributes = _params.reject{|k,v| !profile.attributes.keys.member?(k.to_s)}
+    user.attributes = _params.reject{|k,v| !user.attributes.keys.member?(k.to_s)}
+    if !user.save
+      errors.add(:user, "problem when the system try to save the user")
+    end
+    if !profile.save
+      errors.add(:profile, "problem when the system try to save the profile")
+    end
+  end
+
   protected
     def create_lvl
       UserLevel.create(level_id: 1, user_id: self.id,points: 0)

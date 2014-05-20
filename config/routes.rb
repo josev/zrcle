@@ -2,7 +2,7 @@ Zrcle::Application.routes.draw do
   match '/goals/:goal_id/users/:user_id', to: 'user_goals#create_by_goals', via: [:post]
   match '/users/:user_id/goals/:goal_id', to: 'user_goals#create_by_users', via: [:post]
   match 'users/:user_id/goals/:goal_id/current_step', to: 'user_steps#current_step', via: [:get]
-  
+
   get 'goals/search_by_name/:text', to: 'goals#search_by_name'
   get 'goals/search_by_category/:text', to: 'goals#search_by_category'
   get 'users/:id/random', to: 'users#random_user'
@@ -23,6 +23,7 @@ Zrcle::Application.routes.draw do
   patch 'goal_categories/:id/category_image', to: 'goal_categories#category_image'
   patch 'users/:id/user_image', to: 'users#user_image'
   patch 'users/:user_id/goals/:goal_id/disable', to: 'user_goals#disable_goal'
+  patch 'users/:id/edit_user', to: 'users#edit_user'
 
   resources :goals do
     resources :goal_types, only: [:index]
