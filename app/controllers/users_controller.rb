@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy, :random_user, :user_image, :edit_user]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :random_user, :user_image, :edit_user, :goals_complete]
 
   def index
     @users = User.get_users(params)
@@ -70,6 +70,14 @@ class UsersController < ApplicationController
     else
       render json: {errors: @user.errors}
     end
+  end
+
+  def goals_complete
+    @goals = Array.new
+    @user.finishied_goals.each do |g|
+      @goals.push(g.goal)
+    end
+    render json: @goals
   end
 
   private

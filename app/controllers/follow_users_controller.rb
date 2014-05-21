@@ -1,12 +1,13 @@
 class FollowUsersController < ApplicationController
   before_action :set_follow_user, only: [:show, :edit, :update, :destroy]
   before_action :set_user, only: [:follows, :follow_me]
+  before_action :find_follow, only: [:create]
 
   def default_serializer_options
     user_id= params[:user_id] if params[:user_id].present?  
     {root: false, user_id: user_id, except: [:password, :provider, :uid, :oauth_token, :country, :description, :follows, :friends, :finishied_goals, :goals, :goals_ids]}  
   end  
-  
+
   def index
     @follow_users = FollowUser.get_follow_users(params)
     render json: @follow_users, root: false
@@ -26,7 +27,11 @@ class FollowUsersController < ApplicationController
   end
 
   def create
-    @follow_user=FollowUser.new(follow_user_params)
+    if !@follow_user.present?
+      @follow_user=FollowUser.new(follow_user_params)
+    else
+      @follow_user.status = 1
+    end
     if @follow_user.save
       render @follow_user
     else
@@ -67,6 +72,10 @@ class FollowUsersController < ApplicationController
 
     def set_user
       @user = User.find(params[:id])
+    end
+
+    def find_follow
+      @follow_user = FollowUser.where(user_id: follow_user_params[:user_id], follow_user_id: follow_user_params[:follow_user_id]).first
     end
 
     def follow_user_params
