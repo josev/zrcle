@@ -99,10 +99,6 @@ class User < ActiveRecord::Base
     u
   end
 
-  def following_me
-    FollowUser.where(follow_user_id: self.id)
-  end
-
   def profile
     Profile.where(user_id: self.id).first
   end
