@@ -33,7 +33,7 @@ class FollowUsersController < ApplicationController
       @follow_user.status = 1
     end
     if @follow_user.save
-      render @follow_user
+      render json: @follow_user
     else
       render json: @follow_user.errors
     end

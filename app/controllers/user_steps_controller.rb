@@ -47,7 +47,7 @@ class UserStepsController < ApplicationController
 
   def current_step
     @user_step = UserStep.current_step(current_step_params)
-    render json: @user_step.present? ? @user_step.goal_step : nil
+    render json: @user_step.present? ? @user_step : nil
   end
 
   def step_complete
@@ -56,7 +56,7 @@ class UserStepsController < ApplicationController
       if @next_step.errors.present?
         render json: {errors: @next_step.errors}
       else
-        render json: @next_step.goal_step
+        render json: @next_step
       end
     else
       render json: @next_step
