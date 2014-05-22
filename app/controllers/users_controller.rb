@@ -85,6 +85,11 @@ class UsersController < ApplicationController
     render json: @goals
   end
 
+  def see_completes_goals_user
+    @goals = User.see_completes_goals_user(params[:id])
+    render json: @goals
+  end
+
   private
     def set_user
       @user = User.find(params[:id])

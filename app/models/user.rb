@@ -144,6 +144,10 @@ class User < ActiveRecord::Base
     Goal.joins(:user_goals).where(user_goals: {user_id: user_id, private: false})
   end
 
+  def self.see_completes_goals_user(user_id)
+    Goal.joins(:user_goals).where(user_goals: {user_id: user_id, private: false, state: "2"})
+  end
+
   protected
     def create_lvl
       UserLevel.create(level_id: 1, user_id: self.id,points: 0)
