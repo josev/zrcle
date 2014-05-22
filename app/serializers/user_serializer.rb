@@ -1,6 +1,6 @@
 class UserSerializer < ActiveModel::Serializer
   attributes :id, :nickname, :email, :password, :provider, :uid, :oauth_token, :image,
-  :country, :description, :follows, :friends, :finishied_goals, :goals, :goals_ids, :lvl, :points, :required_points
+  :country, :description, :follows, :friends, :friends_ids, :finishied_goals, :goals, :goals_ids, :lvl, :points, :required_points
 
   def country
   	if object.profile.present?
@@ -62,5 +62,13 @@ class UserSerializer < ActiveModel::Serializer
 
   def required_points
     object.level.present? ? object.level.required_points : 0
+  end
+
+  def friends_ids
+    id = Array.new
+    object.friends.each do |f|
+      id.push(f.id)
+    end
+    id
   end
 end
