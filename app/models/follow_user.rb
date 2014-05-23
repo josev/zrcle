@@ -28,9 +28,11 @@ class FollowUser < ActiveRecord::Base
     flw = FollowUser.where(user_id: user_id, follow_user_id: follow_user_id).first
     if flw.present?
       flw.status = 0
-      flw.save
-    else
-      errors.add(:follow, "cant'n unfollow")
+      if flw.save
+        "unfollow user"
+      else
+        "error for unfollow user"
+      end
     end
   end
 end
