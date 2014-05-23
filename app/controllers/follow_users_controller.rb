@@ -65,6 +65,14 @@ class FollowUsersController < ApplicationController
     render json: @users
   end
 
+  def unfollow_user
+    @follow = FollowUser.unfollow_user(params[:user_id], params[:follow_user_id])
+    if @follow.errors.prensent?
+      render json: {errors: @follow.errors}
+    else
+      render json: @follow
+    end
+  end
   private
     def set_follow_user
       @follow_user = FollowUser.find(params[:id])

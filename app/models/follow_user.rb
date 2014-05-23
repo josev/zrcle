@@ -23,4 +23,14 @@ class FollowUser < ActiveRecord::Base
     flws = FollowUser.select("user_id as id").where(follow_user_id: user.id, status: 1)
     User.where(id: flws)
   end
+
+  def self.unfollow_user(user_id, follow_user_id)
+    flw = FollowUser.where(user_id: user_id, follow_user_id: follow_user_id).first
+    if flw.present?
+      flw.status = 0
+      flw.save
+    else
+      errors.add(:follow, "cant'n unfollow")
+    end
+  end
 end

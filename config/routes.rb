@@ -29,6 +29,7 @@ Zrcle::Application.routes.draw do
   patch 'users/:id/user_image', to: 'users#user_image'
   patch 'users/:user_id/goals/:goal_id/disable', to: 'user_goals#disable_goal'
   patch 'users/:id/edit_user', to: 'users#edit_user'
+  patch 'users/:user_id/follow/:follow_user_id/unfollow_user', to: 'follow_users#unfollow_user'
 
   resources :goals do
     resources :goal_types, only: [:index]
