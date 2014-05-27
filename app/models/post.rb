@@ -17,6 +17,42 @@ class Post < ActiveRecord::Base
       Post.all
     end
   end
+
+  def self.get_timeline(user, goal)
+    motivationals = Comment.get_motivational_sent(user).where(goal_id: goal.id)
+    motivationals += Comment.get_motivational_received(user).where(goal_id: goal.id)
+
+    posts = Post.joins(:user_step => :goal_step).where(user_steps: {user_id: user.id}, goal_steps: {goal_id: goal.id})
+
+    tmlns = Array.new
+    motivationals.each do |m|
+      t = Timeline.new(m.updated_at, m.user_id, m.goal_id, "Motivational", m.to_user_id)
+      tmlns.push(t)
+    end
+    posts.each do |p|
+      t = Timeline.new(p.created_at, p.user.id, p.goal.id, "Post", nil)
+      tmlns.push(t)
+    end
+    tmlns.sort_by{|t| -t[:date]}
+  end
+
+  def self.get_timeline_goal(goal)
+    motivationals = Comment.all.where(goal_id: goal.id).where.not(to_user_id: nil)
+    motivationals += Comment.all.where(goal_id: goal.id).where.not(to_user_id: nil)
+
+    posts = Post.joins(:user_step => :goal_step).where(goal_steps: {goal_id: goal.id})
+
+    tmlns = Array.new
+    motivationals.each do |m|
+      t = Timeline.new(m.updated_at, m.user_id, m.goal_id, "Motivational", m.to_user_id)
+      tmlns.push(t)
+    end
+    posts.each do |p|
+      t = Timeline.new(p.created_at, p.user.id, p.goal.id, "Post", nil)
+      tmlns.push(t)
+    end
+    tmlns.sort_by{|t| -t[:date]}
+  end
 end
 
 class Timeline
