@@ -21,6 +21,8 @@ Zrcle::Application.routes.draw do
   get 'users/:id/see_completes', to: 'users#see_completes_goals_user'
   get 'users/:user_id/goals/:goal_id/timeline', to: 'posts#get_timeline'
   get 'goals/:goal_id/timeline', to: 'posts#get_timeline_goal'
+  get 'goals/:id/motivationals', to: 'goals#motivationals'
+  get 'users/:user_id/goals/:id/motivationals', to: 'goals#motivationals_by_user'
 
   post 'users/login', to: 'users#login'
   post 'users/login', to: 'users#login'

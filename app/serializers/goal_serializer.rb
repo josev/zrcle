@@ -1,6 +1,6 @@
 class GoalSerializer < ActiveModel::Serializer
   attributes :id, :name, :description, :goal_category_id, :expected_result, :goal_type_id, 
-  :state,:users, :friends, :progress, :current_step, :steps, :image, :private
+  :state,:users, :friends, :progress, :current_step, :steps, :image, :private, :date
 
   #has_many :users, through: :user_goals
 
@@ -83,6 +83,21 @@ class GoalSerializer < ActiveModel::Serializer
   def image
     if object.image_url.present?
       "http://zircle.herokuapp.com#{object.image_url.to_s}"
+    end
+  end
+
+  def include_date?
+    date
+  end
+  def date
+    u = User.find_by_id(options[:user_id])
+    if u.present?
+      g = u.goals.where(goal_id: object.id).first
+      if g.present?
+        g.created_at
+      else
+        "unknown"
+      end
     end
   end
 end

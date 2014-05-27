@@ -1,8 +1,6 @@
 class Post < ActiveRecord::Base
   validates :user_step_id, :title, :comment, presence: true
   belongs_to :user_step
-  has_one :user, through: :user_step
-  has_one :goal, through: :user_step
   has_one :goal_step, through: :user_step
 
 
@@ -26,14 +24,14 @@ class Post < ActiveRecord::Base
 
     tmlns = Array.new
     motivationals.each do |m|
-      t = Timeline.new(m.updated_at, m.user_id, m.goal_id, "Motivational", m.to_user_id)
+      t = Timeline.new(m.updated_at, m.user_id, m.goal_id, "Motivational", m.comment, m.to_user_id)
       tmlns.push(t)
     end
     posts.each do |p|
-      t = Timeline.new(p.created_at, p.user.id, p.goal.id, "Post", nil)
+      t = Timeline.new(p.created_at, p.user_step.user.id, p.goal_step.goal.id, p.title, p.comment, nil)
       tmlns.push(t)
     end
-    tmlns.sort_by{|t| -t[:date]}
+    tmlns
   end
 
   def self.get_timeline_goal(goal)
@@ -44,14 +42,14 @@ class Post < ActiveRecord::Base
 
     tmlns = Array.new
     motivationals.each do |m|
-      t = Timeline.new(m.updated_at, m.user_id, m.goal_id, "Motivational", m.to_user_id)
+      t = Timeline.new(m.updated_at, m.user_id, m.goal_id, "Motivational", m.comment, m.to_user_id)
       tmlns.push(t)
     end
     posts.each do |p|
-      t = Timeline.new(p.created_at, p.user.id, p.goal.id, "Post", nil)
+      t = Timeline.new(p.created_at, p.user_step.user.id, p.goal_step.goal.id, p.title, p.comment, nil)
       tmlns.push(t)
     end
-    tmlns.sort_by{|t| -t[:date]}
+    tmlns
   end
 end
 

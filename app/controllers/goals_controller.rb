@@ -1,5 +1,5 @@
 class GoalsController < ApplicationController
-  before_action :set_goal, only: [:show, :edit, :update, :destroy, :goal_image, :get_users_by_goal]
+  before_action :set_goal, only: [:show, :edit, :update, :destroy, :goal_image, :get_users_by_goal, :motivationals, :motivationals_by_user]
   before_action :set_user, only: [:get_users_by_goal]
 
   def index
@@ -73,6 +73,14 @@ class GoalsController < ApplicationController
   def get_users_by_goal
     @users = @goal.get_users_by_goal(@user)
     render json: @users
+  end
+
+  def motivationals
+    render json: @goal.motivationals
+  end
+
+  def motivationals_by_user
+    render json: @goal.motivationals_by_user(params[:user_id])
   end
 
   private

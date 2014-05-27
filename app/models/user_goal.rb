@@ -26,6 +26,13 @@ class UserGoal < ActiveRecord::Base
       user_step.status = step.order == 1 ? 2 : 1
       user_step.goal_step_id = step.id
       user_step.save
+      if user_step.status == 2
+        post = Post.new
+        post.user_step_id = user_step.id
+        post.title = 'Start Goal'
+        post.comment = 'Good luck'
+        post.save
+      end
     end
   end
   protected

@@ -53,4 +53,12 @@ class Goal < ActiveRecord::Base
   def get_users_by_goal(user)
     User.where(id: self.users.where(user_goals:{private: false})).where.not(id: user.friends).where.not(id: user.id)
   end
+
+  def motivationals
+    Comment.where(goal_id: self.id).where.not(to_user_id: nil).order(:created_at)
+  end
+
+  def motivationals_by_user(user_id)
+    Comment.where(goal_id: self.id, to_user_id: user_id).order(:created_at)
+  end
 end
