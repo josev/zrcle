@@ -1,6 +1,6 @@
 class GoalSerializer < ActiveModel::Serializer
   attributes :id, :name, :description, :goal_category_id, :expected_result, :goal_type_id, 
-  :state,:users, :friends, :progress, :current_step, :steps, :image
+  :state,:users, :friends, :progress, :current_step, :steps, :image, :private
 
   #has_many :users, through: :user_goals
 
@@ -62,6 +62,21 @@ class GoalSerializer < ActiveModel::Serializer
       end
     else
       nil
+    end
+  end
+
+  def include_private?
+    private
+  end
+  def private
+    u = User.find_by_id(options[:user_id])
+    if u.present?
+      g = u.goals.where(goal_id: object.id).first
+      if g.present?
+        g.private
+      else
+        "unknown"
+      end
     end
   end
 
