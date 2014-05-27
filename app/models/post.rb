@@ -18,3 +18,15 @@ class Post < ActiveRecord::Base
     end
   end
 end
+
+class Timeline
+  @@no_of_timelines = 0
+  def initialize(date, user_id, goal_id, title, comment, to_user_id)
+    @goal_id = goal_id
+    @user_id = user_id
+    @date = date
+    @title = title
+    @comment = comment
+    @to_user_id = to_user_id
+  end
+end

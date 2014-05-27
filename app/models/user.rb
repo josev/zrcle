@@ -64,7 +64,7 @@ class User < ActiveRecord::Base
     r = user_goals.shuffle
     if r.present?
       r_user = User.where(id: r.first.user_id).first
-      random = Random.new(r.first.goal_id, r_user.id, r_user.nickname, r_user.email, r_user.image_url, r_user.lvl, r_user.points, r_user.required_points)
+      random = Random.new(r.first.goal_id, r_user.id, r_user.nickname, r_user.email, r_user.image_url, r_user.level.level_number, r_user.user_level.points, r_user.level.required_points)
     else
       nil
     end
@@ -159,7 +159,7 @@ class Random
     @email = email
     @image = image.present? ? image : nil
     @lvl = lvl
-    @poinst = poinst
+    @points = points
     @required_points = required_points
   end
 end
