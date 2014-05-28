@@ -55,10 +55,10 @@ class Goal < ActiveRecord::Base
   end
 
   def motivationals
-    Comment.where(goal_id: self.id).where.not(to_user_id: nil).order(:created_at)
+    Comment.where(goal_id: self.id).where.not(to_user_id: nil).order(created_at: :desc)
   end
 
   def motivationals_by_user(user_id)
-    Comment.where(goal_id: self.id, to_user_id: user_id).order(:created_at)
+    Comment.where(goal_id: self.id, to_user_id: user_id).order(created_at: :desc)
   end
 end
