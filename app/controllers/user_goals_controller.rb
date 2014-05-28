@@ -1,5 +1,7 @@
 class UserGoalsController < ApplicationController
   before_action :set_user_goal, only: [:show, :edit, :update, :destroy]
+  before_action :set_user_goal_disable, only: [:disable_goal]
+  before_action :set_user_goal_activate, only: [:create_by_goals, :create_by_users]
 
   def index
     @user_goals = UserGoal.get_user_goals(params)
@@ -30,11 +32,22 @@ class UserGoalsController < ApplicationController
   end
 
   def create_by_goals
-    @user_goal=UserGoal.new
-    @user_goal.user_id = params[:id]
-    @user_goal.goal_id = params[:goal_id]
-    @user_goal.state = "1"
-    @user_goal.private = params[:private]
+    if @user_goal.present?
+      if @user_goal.state == "0"
+        @user_goal.state = "1"
+        @user_goal.private = params[:private]
+      else
+        @user_goal.errors.add(:goal, "already have this goal")
+        render json: {errors: @user_goal.errors}
+        return
+      end
+    else
+      @user_goal=UserGoal.new
+      @user_goal.user_id = params[:user_id]
+      @user_goal.goal_id = params[:goal_id]
+      @user_goal.state = "1"
+      @user_goal.private = params[:private]
+    end
     if @user_goal.save
       @user_goal.start_goal
       render json: @user_goal
@@ -44,11 +57,22 @@ class UserGoalsController < ApplicationController
   end
 
   def create_by_users
-    @user_goal=UserGoal.new
-    @user_goal.user_id = params[:user_id]
-    @user_goal.goal_id = params[:id]
-    @user_goal.state = "1"
-    @user_goal.private = params[:private]
+    if @user_goal.present?
+      if @user_goal.state == "0"
+        @user_goal.state = "1"
+        @user_goal.private = params[:private]
+      else
+        @user_goal.errors.add(:goal, "already have this goal")
+        render json: {errors: @user_goal.errors}
+        return
+      end
+    else
+      @user_goal=UserGoal.new
+      @user_goal.user_id = params[:user_id]
+      @user_goal.goal_id = params[:goal_id]
+      @user_goal.state = "1"
+      @user_goal.private = params[:private]
+    end
     if @user_goal.save
       @user_goal.start_goal
       render json: @user_goal
@@ -73,9 +97,26 @@ class UserGoalsController < ApplicationController
     end
   end
 
+  def disable_goal
+    @user_goal.state = 0 if @user_goal.present?
+    if @user_goal.save
+      render json: @user_goal
+    else
+      render json: {errors: @user_goal.errors}
+    end
+  end
+
   private
     def set_user_goal
       @user_goal = UserGoal.find_by_id(params[:id])
+    end
+
+    def set_user_goal_disable
+      @user_goal = UserGoal.where(user_id: params[:user_id], goal_id: params[:goal_id]).first
+    end
+
+    def set_user_goal_activate
+      @user_goal = UserGoal.where(user_id: params[:user_id], goal_id: params[:goal_id]).first
     end
 
     def user_goal_params

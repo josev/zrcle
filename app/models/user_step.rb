@@ -1,6 +1,7 @@
 class UserStep < ActiveRecord::Base
   validates :user_id, :goal_step_id, :status, presence: :true
   belongs_to :goal_step
+  belongs_to :user
 
   def self.get_user_steps(_params)
     if _params[:goal_id].present?
@@ -43,6 +44,11 @@ class UserStep < ActiveRecord::Base
           user_goal.state = 2
           if user_goal.save
             user.user_level.add_points(100)
+            post = Post.new
+            post.user_step_id = UserStep.where(user_id: current.user_id, goal_step_id: current.id)
+            post.title = 'Complete Goal'
+            post.comment = 'Congratualtions'
+            post.save
             nil
           else
             user_goal

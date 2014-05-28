@@ -11,8 +11,8 @@ class User < ActiveRecord::Base
 
   accepts_nested_attributes_for :profile
 
-  def self.goals
-    UserGoal.where(user_id: self.id)
+  def goals
+    UserGoal.where(user_id: self.id, state: ["1","2"])
   end
 
   def self.get_users(_params)
@@ -47,17 +47,27 @@ class User < ActiveRecord::Base
 
   def self.get_user_random(user)
     u_categories = Array.new
-    user.goals.each do |g|
-      if g.goal.present?
-        u_categories.push(g.goal.goal_category_id)
+    if user.goals.present?
+      user.goals.each do |g|
+        if g.goal.present?
+          u_categories.push(g.goal.goal_category_id)
+        end
+      end
+    else
+      GoalCategory.all.each do |c|
+        u_categories.push(c.id)
       end
     end
     goal_category_id = u_categories.shuffle
     goals = Goal.select("id").where(goal_category_id: goal_category_id)
     user_goals = UserGoal.where(goal_id: goals, private: false).where.not(user_id: user.id)
     r = user_goals.shuffle
-    r_user = User.where(id: r.first.user_id).first
-    random = Random.new(r.first.goal_id, r_user.id, r_user.nickname, r_user.email, r_user.image)
+    if r.present?
+      r_user = User.where(id: r.first.user_id).first
+      random = Random.new(r.first.goal_id, r_user.id, r_user.nickname, r_user.email, r_user.image_url, r_user.level.level_number, r_user.user_level.points, r_user.level.required_points)
+    else
+      nil
+    end
   end
 
   def save_user(_params)
@@ -89,10 +99,6 @@ class User < ActiveRecord::Base
     u
   end
 
-  def following_me
-    FollowUser.where(follow_user_id: self.id)
-  end
-
   def profile
     Profile.where(user_id: self.id).first
   end
@@ -105,8 +111,37 @@ class User < ActiveRecord::Base
     users = User.where(id: lst)
   end
 
-  def goals
+  def finishied_goals
     UserGoal.where(user_id: self.id, state: "2")
+  end
+
+  def edit_user(user, profile, _params)
+    profile.attributes = _params.reject{|k,v| !profile.attributes.keys.member?(k.to_s)}
+    user.attributes = _params.reject{|k,v| !user.attributes.keys.member?(k.to_s)}
+    if !user.save
+      errors.add(:user, "problem when the system try to save the user")
+    end
+    if !profile.save
+      errors.add(:profile, "problem when the system try to save the profile")
+    end
+  end
+
+  def follows
+    flws = FollowUser.select("follow_user_id as id").where(user_id: self.id, status: 1)
+    User.where(id: flws)
+  end
+
+  def follow_me
+    flws = FollowUser.select("user_id as id").where(follow_user_id: self.id, status: 1)
+    User.where(id: flws)
+  end
+
+  def self.see_goals_user(user_id)
+    Goal.joins(:user_goals).where(user_goals: {user_id: user_id, private: false})
+  end
+
+  def self.see_completes_goals_user(user_id)
+    Goal.joins(:user_goals).where(user_goals: {user_id: user_id, private: false, state: "2"})
   end
 
   protected
@@ -117,11 +152,14 @@ end
 
 class Random
   @@no_of_randoms = 0
-  def initialize(goal_id, user_id, nickname, email, image)
+  def initialize(goal_id, user_id, nickname, email, image, lvl, points, required_points)
     @goal_id = goal_id
     @user_id = user_id
     @nickname = nickname
     @email = email
     @image = image.present? ? image : nil
+    @lvl = lvl
+    @points = points
+    @required_points = required_points
   end
 end

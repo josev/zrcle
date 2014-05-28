@@ -1,24 +1,39 @@
 Zrcle::Application.routes.draw do
-  match '/goals/:goal_id/users/:id', to: 'user_goals#create_by_goals', via: [:post]
-  match '/users/:user_id/goals/:id', to: 'user_goals#create_by_users', via: [:post]
+  match '/goals/:goal_id/users/:user_id', to: 'user_goals#create_by_goals', via: [:post]
+  match '/users/:user_id/goals/:goal_id', to: 'user_goals#create_by_users', via: [:post]
   match 'users/:user_id/goals/:goal_id/current_step', to: 'user_steps#current_step', via: [:get]
+
   get 'goals/search_by_name/:text', to: 'goals#search_by_name'
   get 'goals/search_by_category/:text', to: 'goals#search_by_category'
-  post 'users/login', to: 'users#login'
   get 'users/:id/random', to: 'users#random_user'
   get 'friendships/get_friends/:user_id', to: 'friendships#get_friends'
   get 'friendships/get_friends_by_name/:text', to: 'friendships#get_friends_by_name'
-  post 'users/login', to: 'users#login'
-  post 'users/:user_id/goals/:goal_id/step_complete', to: 'user_steps#step_complete'
-  patch 'goals/:id/goal_image', to: 'goals#goal_image'
-  patch 'goal_categories/:id/category_image', to: 'goal_categories#category_image'
-  patch 'users/:id/user_image', to: 'users#user_image'
   get 'users/:id/motivational_sent', to: 'comments#motivational_sent'
   get 'users/:id/motivational_received', to: 'comments#motivational_received'
   get 'users/:user_id/goals/:goal_id/friends', to: 'friendships#get_friends_by_goal'
   get 'users/:user_id/requests_received', to: 'friendships#requests_friend_received'
   get 'users/:user_id/requests_sent', to: 'friendships#requests_friend_sent'
   get 'goals/:id/users/:user_id/users_by_goal', to: 'goals#get_users_by_goal'
+  get 'users/:id/follows', to: 'follow_users#follows'
+  get 'users/:id/follow_me', to: 'follow_users#follow_me'
+  get 'users/:id/goals_complete', to: 'users#goals_complete'
+  get 'users/:id/see_goals', to: 'users#see_goals_user'
+  get 'users/:id/see_completes', to: 'users#see_completes_goals_user'
+  get 'users/:user_id/goals/:goal_id/timeline', to: 'posts#get_timeline'
+  get 'goals/:goal_id/timeline', to: 'posts#get_timeline_goal'
+  get 'goals/:id/motivationals', to: 'goals#motivationals'
+  get 'users/:user_id/goals/:id/motivationals', to: 'goals#motivationals_by_user'
+
+  post 'users/login', to: 'users#login'
+  post 'users/login', to: 'users#login'
+  post 'users/:user_id/goals/:goal_id/step_complete', to: 'user_steps#step_complete'
+
+  patch 'goals/:id/goal_image', to: 'goals#goal_image'
+  patch 'goal_categories/:id/category_image', to: 'goal_categories#category_image'
+  patch 'users/:id/user_image', to: 'users#user_image'
+  patch 'users/:user_id/goals/:goal_id/disable', to: 'user_goals#disable_goal'
+  patch 'users/:id/edit_user', to: 'users#edit_user'
+  patch 'users/:user_id/follow/:follow_user_id/unfollow_user', to: 'follow_users#unfollow_user'
 
   resources :goals do
     resources :goal_types, only: [:index]
@@ -31,6 +46,7 @@ Zrcle::Application.routes.draw do
     resources :comments, only: [:index]
     resources :follow_goals, only: [:index]
     resources :user_steps, only: [:index]
+    resources :posts
   end
   resources :users do
     resources :user_goals, only: [:index, :destroy]
@@ -41,6 +57,7 @@ Zrcle::Application.routes.draw do
     resources :follow_users, only: [:index]
     resources :friendships, only: [:index]
     resources :user_steps, only: [:index, :delete]
+    resources :posts
   end
   #resources :comment_likes
   #resources :comment_replies
@@ -69,6 +86,7 @@ Zrcle::Application.routes.draw do
   #resources :user_levels
   resources :user_steps
   resources :levels
+  resources :posts
 
 
 
